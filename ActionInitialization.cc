@@ -1,5 +1,5 @@
 //-----------------------------------------
-//         
+//
 //-----------------------------------------
 
 //Author:   Carlos Leonardo Fernandez Luna
@@ -23,7 +23,7 @@ void ActionInitialization::Build() const
     //RunAction *runaction = new RunAction();
     //SetUserAction(runaction);
 
-    //EventAction *eventaction = new EventAction(runaction); 
+    //EventAction *eventaction = new EventAction(runaction);
     //SetUserAction(eventaction);
 
     //SteppingAction *steppingaction = new SteppingAction(eventaction);

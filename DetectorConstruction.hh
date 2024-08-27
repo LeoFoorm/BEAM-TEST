@@ -21,9 +21,9 @@
 #include "G4NistManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4OpticalPhysics.hh"
-//#include "detector.hh"
+#include "SensitiveDetector.hh"
 #include "G4OpticalSurface.hh"
-#include "G4LogicalSkinSurface.hh" 
+#include "G4LogicalSkinSurface.hh"
 
 
 class G4VPhysicalVolume;
@@ -36,50 +36,50 @@ class G4LogicalVolume;
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
-    
+
 
     DetectorConstruction();
     ~DetectorConstruction();
-  
-    virtual G4VPhysicalVolume *Construct(); 
+
+    virtual G4VPhysicalVolume *Construct();
 
 
     //void ConstructProtoDetector();
-    
 
-    G4LogicalVolume *GetScoringVolume() const {return fScoringVolume;}  
+
+    G4LogicalVolume *GetScoringVolume() const {return fScoringVolume;}
 
 
     G4double wavelength, lightOutput;
 
 
-  private: 
+  private:
 
-    //In order to give the sensitivity characteristic to the detector, we have to references to this object outsid. That's why we create this private
-    virtual void ConstructSDandField();//here I define this function in order to give th detector characteristics. Private means that this function is previously define on Geant4.
+    //                                        In order to give the sensitivity characteristic to the detector, we have to references to this object outsid. That's why we create this private
+    virtual void ConstructSDandField();//     I define this function in order to give th detector characteristics. Private means that this function is previously define on Geant4.
 
 
-    G4double env_sizeX, env_sizeY, env_sizeZ; 
+    G4double env_sizeX, env_sizeY, env_sizeZ;
 
-    
+
 
     G4Box  *SolidWorld, *Solidsquare, *SolidSA, *Solidsipm, *Solidmylar;
-    G4LogicalVolume *LogicWorld, *Logicsipm, *LogicalSA, *Logicsquare, *Logicmylar; 
+    G4LogicalVolume *LogicWorld, *Logicsipm, *LogicalSA, *Logicsquare, *Logicmylar;
     G4VPhysicalVolume *PhysicalWorld, *Physicalsquare, *PhysicalSA, *Physicalsipm,*Physicalmylar;
 
-    
+
     void DefineMaterials();
 
 
     G4Material *plastic, *worldMaterial, *steel, *mylarMaterial;
-   
-    
-    
-   // G4bool ProtoDetector; 
+
+
+
+   // G4bool ProtoDetector;
 
 
     G4OpticalSurface *mirrorsurface; //based on the PET video 13/05 1:46 pm
-    
+
 
     G4LogicalVolume *fScoringVolume;
 

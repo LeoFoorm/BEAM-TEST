@@ -5,7 +5,7 @@
 
 #-----------------------------------
 #BASIC CONFIGURATION
- 
+
 cmake_minimum_required(VERSION 3.29.0)
 
 project(TEST_BEAM)
@@ -24,21 +24,21 @@ endif()
 #CONFIGURE THE PROJECT TO USE GEANT4
 
 #To automatically configure CMake to use additional CMake modules supplied
-#by Geant4. Here, sets to the path to this module when Geant4 is located by 
-#by find_package. 
+#by Geant4. Here, sets to the path to this module when Geant4 is located by
+#by find_package.
 
 include(${Geant4_USE_FILE})
 
 #include_directories(${PROJECT_SOURCE_DIR}/include)
 
 #the line above adds the PROJECT header directory to the compiler's header search path.
-#The things after include are calling CMake variables. The above variable points to the 
+#The things after include are calling CMake variables. The above variable points to the
 #top level directory of the project and is set by the earlier call to the "project" command.
 
 #------------------------------------
 #LIST THE SOURCES TO BUILD THE APPLICATION
 
-#In order to compile every src and header file. 
+#In order to compile every src and header file.
 
 file(GLOB sources ${PROJECT_SOURCE_DIR}/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/*.hh)
@@ -51,9 +51,9 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/*.hh)
 #DEFINE THE EXECUTABLE
 
 #The creation of the executable; we will tell CMake the name of the executable (a file with .cc).
-#target link command links the executable with the Geant4 libraries. 
+#target link command links the executable with the Geant4 libraries.
 
-add_executable(beam beam.cc ${sources} ${headers})  
+add_executable(beam beam.cc ${sources} ${headers})
 target_link_libraries(beam ${Geant4_LIBRARIES})
 
 #--------------------------------------

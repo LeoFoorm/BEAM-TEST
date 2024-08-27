@@ -20,7 +20,7 @@
 DetectorConstruction::DetectorConstruction()
 {
  DefineMaterials();
-  
+
 }
 
 
@@ -73,7 +73,7 @@ void DetectorConstruction::DefineMaterials()
     rindexmylar.push_back(Rindexmylar);
 
     }
-  
+
   G4int numberOfEntries = energy.size();
 
 
@@ -96,7 +96,7 @@ void DetectorConstruction::DefineMaterials()
  G4MaterialPropertiesTable *prop=new G4MaterialPropertiesTable();
  G4MaterialPropertiesTable *propworld=new G4MaterialPropertiesTable();
  G4MaterialPropertiesTable *propmylar=new G4MaterialPropertiesTable();
- 
+
 
  propworld->AddProperty("RINDEX",energy, rindexWorld,numberOfEntries);
  prop->AddProperty("RINDEX",energy, RI,numberOfEntries);
@@ -120,8 +120,8 @@ void DetectorConstruction::DefineMaterials()
 
 
 //void DetectorConstruction::ConstructProtoDetector()
- 
-//{ 
+
+//{
 
 
 //}
@@ -133,14 +133,14 @@ void DetectorConstruction::DefineMaterials()
 G4VPhysicalVolume *DetectorConstruction::Construct()
 {
     //####################################################################
-  
+
   env_sizeX = 5*m;
   env_sizeY = 5*m;
   env_sizeZ = 5*m;
 
   //world
   SolidWorld = new G4Box("SolidWorld", env_sizeX, env_sizeY, env_sizeZ);
-  
+
   //logical
   LogicWorld = new G4LogicalVolume(SolidWorld, worldMaterial, "LogicWorld");
 
@@ -149,7 +149,7 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   PhysicalWorld = new G4PVPlacement(0, G4ThreeVector(), LogicWorld, "PhysicalWorld", 0, false, 0, true);
 
 
-  
+
   //############################ SQUARE ###########################
 
   G4double bar_X = 100*cm;
@@ -157,9 +157,9 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   G4double bar_Z = 1*cm;
 
   G4ThreeVector  positionsquare = G4ThreeVector(0, 0, 100*cm);
-  
+
   Solidsquare = new G4Box("Solidsquare", bar_X, bar_Y, bar_Z );
-  Logicsquare = new G4LogicalVolume(Solidsquare, plastic, "Logicsquare");
+  Logicsquare = new G4LogicalVolume(Solidsquare, plastic, "Logicsquare"); //<-----
 
   //fScoringVolume = Logicsquare;
 
@@ -173,7 +173,7 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   G4double SA_Z =70*cm;
 
   G4ThreeVector  positionSA = G4ThreeVector(0, 0, -100*cm);
-  
+
   SolidSA = new G4Box("SolidSA", SA_X, SA_Y, SA_Z );
   LogicalSA = new G4LogicalVolume(SolidSA, steel, "LogicSA");
 
@@ -187,9 +187,9 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   //G4double sipm_X = 0.6*cm;
   //G4double sipm_Y = 0.6*cm;
   //G4double sipm_Z = 0.01*cm;
-  
+
   //G4ThreeVector possipm = G4ThreeVector(0, 0, 100.0051*cm);
-  
+
   //Solidsipm = new G4Box("Solidsipm", sipm_X, sipm_Y, sipm_Z );
   //Logicsipm = new G4LogicalVolume(Solidsipm, worldMaterial, "Logicsipm");
 
@@ -197,7 +197,7 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
 
   //Physicalsipm = new G4PVPlacement(0, possipm, Logicsipm, "Physicalsipm", LogicWorld, false, 0, true);
 
- 
+
  //############################# MYLAR ###############################
 
  //G4double mylar_x = 100.001*cm;
@@ -211,20 +211,20 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
 
  //fScoringVolume = Logicmylar;
 
- //G4LogicalSkinSurface *skin= new G4LogicalSkinSurface("skin", Logicmylar, mirrorsurface); 
+ //G4LogicalSkinSurface *skin= new G4LogicalSkinSurface("skin", Logicmylar, mirrorsurface);
  //Physicalmylar = new G4PVPlacement(0,positionmylar,Logicmylar,"Physicalmylar",LogicWorld,false,0,true);
 
- 
 
- 
+
+
   //the mother volume always needs this return
-  return PhysicalWorld; 
+  return PhysicalWorld;
 }
 
 
 void DetectorConstruction::ConstructSDandField()
 {
- //SensitiveDetector *sensDet = new SensitiveDetector("SensitiveDetector");
- 
- //Logicsquare->SetSensitiveDetector(sensDet);
+ SensitiveDetector *sensDet = new SensitiveDetector("SensitiveDetector");
+
+ Logicsquare->SetSensitiveDetector(sensDet);
 }
