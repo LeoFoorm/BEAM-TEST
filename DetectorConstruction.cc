@@ -19,11 +19,7 @@
 
 DetectorConstruction::DetectorConstruction()
 {
-  DefineMaterials();
-
-  env_sizeX = 10*m;
-  env_sizeY = 10*m;
-  env_sizeZ = 10*m;
+ DefineMaterials();
   
 }
 
@@ -88,7 +84,7 @@ void DetectorConstruction::DefineMaterials()
  worldMaterial = nist->FindOrBuildMaterial("G4_AIR");
  plastic = nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
  mylarMaterial = nist->FindOrBuildMaterial("G4_MYLAR");
- steel = nist->FindOrBuildMaterial("G4_STAINLESS_STEEL");
+ steel = nist->FindOrBuildMaterial("G4_STAINLESS-STEEL");
  mirrorsurface = new G4OpticalSurface("mirrorsurface");
 
 
@@ -123,10 +119,38 @@ void DetectorConstruction::DefineMaterials()
 
 
 
-void DetectorConstruction::ConstructProtoDetector()
+//void DetectorConstruction::ConstructProtoDetector()
+ 
+//{ 
 
-{ 
-//############################ SQUARE ###########################
+
+//}
+
+
+
+//all the important information to Construct() to construct the detector
+
+G4VPhysicalVolume *DetectorConstruction::Construct()
+{
+    //####################################################################
+  
+  env_sizeX = 5*m;
+  env_sizeY = 5*m;
+  env_sizeZ = 5*m;
+
+  //world
+  SolidWorld = new G4Box("SolidWorld", env_sizeX, env_sizeY, env_sizeZ);
+  
+  //logical
+  LogicWorld = new G4LogicalVolume(SolidWorld, worldMaterial, "LogicWorld");
+
+  //Physical
+  //parametros: rotation, origen (0,0,0), el logical volume, su nombre, si va a estar dentro de otro volumen, copias, check overlaps
+  PhysicalWorld = new G4PVPlacement(0, G4ThreeVector(), LogicWorld, "PhysicalWorld", 0, false, 0, true);
+
+
+  
+  //############################ SQUARE ###########################
 
   G4double bar_X = 100*cm;
   G4double bar_Y = 100*cm;
@@ -148,7 +172,7 @@ void DetectorConstruction::ConstructProtoDetector()
   G4double SA_Y = 100*cm;
   G4double SA_Z =70*cm;
 
-  G4ThreeVector  positionSA = G4ThreeVector(0, 0, 0);
+  G4ThreeVector  positionSA = G4ThreeVector(0, 0, -100*cm);
   
   SolidSA = new G4Box("SolidSA", SA_X, SA_Y, SA_Z );
   LogicalSA = new G4LogicalVolume(SolidSA, steel, "LogicSA");
@@ -191,28 +215,6 @@ void DetectorConstruction::ConstructProtoDetector()
  //Physicalmylar = new G4PVPlacement(0,positionmylar,Logicmylar,"Physicalmylar",LogicWorld,false,0,true);
 
  
-//####################################################################
-
-}
-
-
-
-//all the important information to Construct() to construct the detector
-
-G4VPhysicalVolume *DetectorConstruction::Construct()
-{
-  
-
-  //world
-  SolidWorld = new G4Box("SolidWorld", env_sizeX, env_sizeY, env_sizeZ);
-  
-  //logical
-  LogicWorld = new G4LogicalVolume(SolidWorld, worldMaterial, "LogicWorld");
-
-  //Physical
-  //parametros: rotation, origen (0,0,0), el logical volume, su nombre, si va a estar dentro de otro volumen, copias, check overlaps
-  PhysicalWorld = new G4PVPlacement(0, G4ThreeVector(), LogicWorld, "PhysicalWorld", 0, false, 0, true);
-
 
  
   //the mother volume always needs this return

@@ -37,7 +37,7 @@ int main(int argc,char** argv)
     G4UImanager *UImanager = G4UImanager::GetUIpointer();
 
     UImanager->ApplyCommand("/vis/open OGL");
-    UImanager->ApplyCommand("/vis/viewer/set/rotationStyle freeRotation");
+    UImanager->ApplyCommand("/vis/viewer/set/ViewpointVector 1 1 1");
     UImanager->ApplyCommand("/vis/drawVolume");
     UImanager->ApplyCommand("/vis/viewer/set/autoRefresh true");//update everytime it creates a new event
     UImanager->ApplyCommand("/vis/scene/add/trajectories smooth");//to show the particle

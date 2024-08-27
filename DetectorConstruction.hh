@@ -44,7 +44,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     virtual G4VPhysicalVolume *Construct(); 
 
 
-    void ConstructProtoDetector();
+    //void ConstructProtoDetector();
     
 
     G4LogicalVolume *GetScoringVolume() const {return fScoringVolume;}  
@@ -64,7 +64,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     
 
     G4Box  *SolidWorld, *Solidsquare, *SolidSA, *Solidsipm, *Solidmylar;
-    G4LogicalVolume *LogicWorld,*Logicsipm,*LogicalSA, *Logicsquare, *Logicmylar; 
+    G4LogicalVolume *LogicWorld, *Logicsipm, *LogicalSA, *Logicsquare, *Logicmylar; 
     G4VPhysicalVolume *PhysicalWorld, *Physicalsquare, *PhysicalSA, *Physicalsipm,*Physicalmylar;
 
     
