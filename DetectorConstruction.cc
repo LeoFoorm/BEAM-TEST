@@ -134,9 +134,9 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
 {
     //####################################################################
 
-  env_sizeX = 5*m;
-  env_sizeY = 5*m;
-  env_sizeZ = 5*m;
+  env_sizeX = 3*m;
+  env_sizeY = 3*m;
+  env_sizeZ = 3*m;
 
   //world
   SolidWorld = new G4Box("SolidWorld", env_sizeX, env_sizeY, env_sizeZ);
@@ -152,11 +152,11 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
 
   //############################ SQUARE ###########################
 
-  G4double bar_X = 100*cm;
-  G4double bar_Y = 100*cm;
-  G4double bar_Z = 1*cm;
+  G4double bar_X = 50*cm;
+  G4double bar_Y = 50*cm;
+  G4double bar_Z = 0.5*cm;
 
-  G4ThreeVector  positionsquare = G4ThreeVector(0, 0, 100*cm);
+  G4ThreeVector  positionsquare = G4ThreeVector(0, 0, 50*cm);
 
   Solidsquare = new G4Box("Solidsquare", bar_X, bar_Y, bar_Z );
   Logicsquare = new G4LogicalVolume(Solidsquare, plastic, "Logicsquare"); //<-----
@@ -168,11 +168,11 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
 
 //############################ STEEL-ABSORBER  ###########################
 
-  G4double SA_X = 100*cm;
-  G4double SA_Y = 100*cm;
-  G4double SA_Z =70*cm;
+  G4double SA_X = 50*cm;
+  G4double SA_Y = 50*cm;
+  G4double SA_Z =35*cm;
 
-  G4ThreeVector  positionSA = G4ThreeVector(0, 0, -100*cm);
+  G4ThreeVector  positionSA = G4ThreeVector(0, 0, -35*cm);
 
   SolidSA = new G4Box("SolidSA", SA_X, SA_Y, SA_Z );
   LogicalSA = new G4LogicalVolume(SolidSA, steel, "LogicSA");
