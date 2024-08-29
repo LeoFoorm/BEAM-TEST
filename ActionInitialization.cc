@@ -20,8 +20,8 @@ void ActionInitialization::Build() const
     PrimaryGeneratorAction *generator = new PrimaryGeneratorAction();
     SetUserAction(generator);
 
-    //RunAction *runaction = new RunAction();
-    //SetUserAction(runaction);
+    RunAction *runaction = new RunAction();
+    SetUserAction(runaction);
 
     //EventAction *eventaction = new EventAction(runaction);
     //SetUserAction(eventaction);

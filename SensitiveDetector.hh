@@ -14,7 +14,7 @@
 #include "G4AnalysisManager.hh"
 #include "G4RunManager.hh"
 #include "G4SystemOfUnits.hh"
-//#include "RunAction.hh"
+#include "RunAction.hh"
 
 
 class SensitiveDetector : public G4VSensitiveDetector

@@ -29,8 +29,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist)
     //G4ThreeVector momentumphoton = preStepPoint->GetMomentum();
     //G4double wlen = (1.239841939*eV/momentumphoton.mag())*1E+03; //nanometros
 
-    G4cout<<" PHOTON POSITION "<<posPhoton<<G4endl;
-    //THIS TO PRINT THE DETECTOR THAT HAVE BEEN HIT. BUT I ONLY HAVE ONE DETECTOR. So what will I get?
+    G4cout<<" PHOTON POSITION "<<posPhoton<<G4endl; 
+    //The above print the position of the photon detected by the square.
 
 
 
@@ -40,27 +40,29 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist)
     //G4cout<<" COPY NUMBER "<<copyNo<<G4endl;
 
     G4VPhysicalVolume *PhysVol = touchable->GetVolume();
-  //G4ThreeVector posDetector = PhysVol->GetTranslation();  <--------
+    G4ThreeVector posDetector = PhysVol->GetTranslation();  
 
-    //G4cout << " DETECTOR POSITION:  " << posDetector << G4endl;
+    G4cout << " DETECTOR POSITION:  " << posDetector << G4endl;
     //G4cout << " PHOTON WAVELENGTH:  " << wlen << G4endl;
 
     G4int evt = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
 
-     //#################################################<-- 27/05 7 pm NUMBER OF DETECTED PHOTONS
-    //const RunAction *runaction = static_cast< const RunAction* >(G4RunManager::GetRunManager()->GetUserRunAction());
-    //RunAction *runactionNonConst = const_cast<RunAction *>(runaction); //<--- linea que resuelve error
-    //runactionNonConst->AddPhotonHit();
-    //#################################################<-- 27/05 7 pm
+     //################################################# NUMBER OF DETECTED PHOTONS
 
-    //G4AnalysisManager *man = G4AnalysisManager::Instance(); //<-- 20/05 1:15 am (y lo de abajo)
+    const RunAction *runaction = static_cast< const RunAction* >(G4RunManager::GetRunManager()->GetUserRunAction());
+    RunAction *runactionNonConst = const_cast<RunAction *>(runaction); 
+    runactionNonConst->AddPhotonHit();
 
-    //man->FillNtupleIColumn(0,0,evt); //<------------ 20/05 11 pm
-    //man->FillNtupleDColumn(0,1,momentumphoton[0]);
-    //man->FillNtupleDColumn(0,2,momentumphoton[1]);
-    //man->FillNtupleDColumn(0,3,momentumphoton[2]);
+    //#################################################
+
+    G4AnalysisManager *man = G4AnalysisManager::Instance(); 
+
+    man->FillNtupleIColumn(0,0,evt); 
+    man->FillNtupleDColumn(0,1,posPhoton[0]);
+    man->FillNtupleDColumn(0,2,posPhoton[1]);
+    man->FillNtupleDColumn(0,3,posPhoton[2]);
     //man->FillNtupleDColumn(0,4,wlen);
-    //man->AddNtupleRow(0);
+    man->AddNtupleRow(0);
 
     //man->FillNtupleIColumn(1,0,evt);
     //man->FillNtupleDColumn(1,1,posDetector[0]);

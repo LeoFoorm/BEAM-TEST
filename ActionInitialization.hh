@@ -14,7 +14,7 @@
 
 #include "G4VUserActionInitialization.hh"
 #include "PrimaryGeneratorAction.hh"
-//#include "RunAction.hh"
+#include "RunAction.hh"
 //#include "EventAction.hh"
 //#include "SteppingAction.hh"
 
