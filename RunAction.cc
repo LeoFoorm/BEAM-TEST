@@ -17,11 +17,12 @@ RunAction::RunAction()
 
 //The next is to define what kind of information we want to store
 
- man->CreateNtuple("Photons","Photon positions");
+ man->CreateNtuple("Particles","Particles detected information; position and name");
  man->CreateNtupleIColumn("fEvent");
  man->CreateNtupleDColumn("fX");
  man->CreateNtupleDColumn("fY");
  man->CreateNtupleDColumn("fZ");
+ man->CreateNtupleSColumn("PARTICLE_TYPE");
  //man->CreateNtupleDColumn("fwlen");
  //man->CreateNtupleDColumn("fTime"); 
  man->FinishNtuple(0);
@@ -64,5 +65,5 @@ void RunAction::EndOfRunAction(const G4Run*)
  man->Write();
  man->CloseFile();
 
- G4cout << "NUMBER OF PHOTONS DETECTED: " << photonHits << G4endl; 
+ G4cout << "NUMBER OF PARTICLES DETECTED: " << photonHits << G4endl; 
 }

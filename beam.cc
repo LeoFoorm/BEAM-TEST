@@ -16,11 +16,17 @@
 #include "Physics.hh"
 #include "ActionInitialization.hh"
 #include "G4OpticalPhysics.hh"
+#include "Randomize.hh"
 
 
 
 int main(int argc,char** argv)
 {
+    long seeds[2];
+    seeds[0] = time(NULL);
+    seeds[1] = 0;
+    CLHEP::HepRandom::setTheSeeds(seeds);
+
     G4RunManager *runManager = new G4RunManager;
 
     runManager->SetUserInitialization(new DetectorConstruction());
@@ -30,13 +36,18 @@ int main(int argc,char** argv)
     //Physics-> RegisterPhysics(new G4OpticalPhysics());
     runManager->Initialize();
 
-    G4UIExecutive *ui = new G4UIExecutive(argc,argv);
-
+    G4UIExecutive *ui = 0;
+    if(argc==1)
+    {
+        ui = new G4UIExecutive(argc,argv);
+    }
+   
     G4VisManager * visManager = new G4VisExecutive();
     visManager->Initialize();
-
     G4UImanager *UImanager = G4UImanager::GetUIpointer();
 
+    if(ui)
+    {
     UImanager->ApplyCommand("/vis/open OGL");
     UImanager->ApplyCommand("/vis/viewer/set/ViewpointVector 1 1 1");
     UImanager->ApplyCommand("/vis/drawVolume");
@@ -50,6 +61,16 @@ int main(int argc,char** argv)
     //UImanager->ApplyCommand("/vis/scene/");
 
     ui->SessionStart();
-
+    }
+    else
+    {
+        G4String command = "/control/execute ";
+        G4String fileName = argv[1];
+        UImanager->ApplyCommand(command+fileName);
+    
+    }
     return 0;
 }
+
+
+//NOTE: Be sure of changing the seed.

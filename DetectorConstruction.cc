@@ -127,16 +127,13 @@ void DetectorConstruction::DefineMaterials()
 //}
 
 
-
-//all the important information to Construct() to construct the detector
-
 G4VPhysicalVolume *DetectorConstruction::Construct()
 {
-    //####################################################################
+    //############################ WORLD ############################
 
-  env_sizeX = 3*m;
-  env_sizeY = 3*m;
-  env_sizeZ = 3*m;
+  env_sizeX = 7*m;
+  env_sizeY = 7*m;
+  env_sizeZ = 7*m;
 
   //world
   SolidWorld = new G4Box("SolidWorld", env_sizeX, env_sizeY, env_sizeZ);
@@ -152,11 +149,11 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
 
   //############################ SQUARE ###########################
 
-  G4double bar_X = 50*cm;
-  G4double bar_Y = 50*cm;
+  G4double bar_X = 600*cm;
+  G4double bar_Y = 600*cm;
   G4double bar_Z = 0.5*cm;
 
-  G4ThreeVector  positionsquare = G4ThreeVector(0, 0, 50*cm);
+  G4ThreeVector  positionsquare = G4ThreeVector(0, 0, 600*cm);
 
   Solidsquare = new G4Box("Solidsquare", bar_X, bar_Y, bar_Z );
   Logicsquare = new G4LogicalVolume(Solidsquare, plastic, "Logicsquare"); //<-----
