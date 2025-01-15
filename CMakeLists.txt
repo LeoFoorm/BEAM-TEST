@@ -1,14 +1,9 @@
 #-----------------------------------
-       #INSTRUCTIONS TO CMAKE
-#-----------------------------------
-
-
-#-----------------------------------
 #BASIC CONFIGURATION
-
+ 
 cmake_minimum_required(VERSION 3.29.0)
 
-project(TEST_BEAM)
+project(BeamTest)
 
 #-----------------------------------
 #FIND AND CONFIGURE GEANT4
@@ -24,21 +19,21 @@ endif()
 #CONFIGURE THE PROJECT TO USE GEANT4
 
 #To automatically configure CMake to use additional CMake modules supplied
-#by Geant4. Here, sets to the path to this module when Geant4 is located by
-#by find_package.
+#by Geant4. Here, sets to the path to this module when Geant4 is located by 
+#by find_package. 
 
 include(${Geant4_USE_FILE})
 
 #include_directories(${PROJECT_SOURCE_DIR}/include)
 
 #the line above adds the PROJECT header directory to the compiler's header search path.
-#The things after include are calling CMake variables. The above variable points to the
+#The things after include are calling CMake variables. The above variable points to the 
 #top level directory of the project and is set by the earlier call to the "project" command.
 
 #------------------------------------
 #LIST THE SOURCES TO BUILD THE APPLICATION
 
-#In order to compile every src and header file.
+#In order to compile every src and header file. 
 
 file(GLOB sources ${PROJECT_SOURCE_DIR}/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/*.hh)
@@ -58,13 +53,13 @@ file(COPY ${MACRO_FILES} DESTINATION ${PROJECT_BINARY_DIR})
 #DEFINE THE EXECUTABLE
 
 #The creation of the executable; we will tell CMake the name of the executable (a file with .cc).
-#target link command links the executable with the Geant4 libraries.
+#target link command links the executable with the Geant4 libraries. 
 
-add_executable(beam beam.cc ${sources} ${headers})
-target_link_libraries(beam ${Geant4_LIBRARIES})
+add_executable(BeamTest BeamTest.cc ${sources} ${headers})  
+target_link_libraries(BeamTest ${Geant4_LIBRARIES})
 
 #--------------------------------------
 #CUSTOM TARGETS
 #For internal Geant4 use - but has no effect if you build this
 
-add_custom_target(TEST_BEAM DEPENDS beam)
+#add_custom_target(MID_MODULE_ME DEPENDS MID_MODULE_ME)
