@@ -204,7 +204,13 @@ vector<G4double> Get_pos_z_b() const {return pos_layer_B_z;}
 
 //---------------------------------------------------------
 
+void Particle_Name_Pierced_Layer_A(G4String name_a){
+    particles_names_A.push_back(name_a);
+}
 
+vector<G4String> Get_particle_names_A() const {return particles_names_A;}
+
+//---------------------------------------------------------
 
 private:
 
@@ -231,6 +237,8 @@ vector<G4double> pos_layer_A_z;
 vector<G4double> pos_layer_B_x;
 vector<G4double> pos_layer_B_y;
 vector<G4double> pos_layer_B_z;
+
+vector<G4String> particles_names_A;
 
 G4double TOTAL_Edep;
 G4double TOTAL_dEdx;

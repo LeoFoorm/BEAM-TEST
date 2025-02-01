@@ -42,6 +42,7 @@ muonCount = 0;
     pos_layer_B_y.clear();
     pos_layer_B_z.clear();
 
+    particles_names_A.clear();
 }
 
 
@@ -94,6 +95,8 @@ void EventAction::BeginOfEventAction(const G4Event*)
     pos_layer_B_x.clear();
     pos_layer_B_y.clear();
     pos_layer_B_z.clear();
+
+    particles_names_A.clear();
 }
 
 
@@ -256,13 +259,30 @@ G4cout <<"" <<G4endl;
 
 int Sumcopies = traversed_Bars_A.size() + traversed_Bars_B.size();
 G4cout << "TOTAL AMOUNT OF PIERCED BARS:  " << Sumcopies << "  barras" << "\n" << G4endl; 
-G4cout << "------------------------------------------------------------" << G4endl;
 
+
+
+G4cout << G4endl;
+G4cout << "PARTICLES ON LAYER A: " <<  G4endl;
+
+if (particles_names_A.empty()) {
+    G4cout << "**No particles pierced Layer A in this event." << G4endl;
+} else {
+    for (auto p_name : particles_names_A) {
+        G4cout << p_name << ", ";
+    }}
+
+
+
+G4cout << G4endl;
+G4cout << "\n------------------------------------------------------------" << G4endl;
+G4cout << G4endl;
 
 G4cout <<"(A) POSITION X : " << G4endl;
 for(const auto& pos_x_A :pos_layer_A_x){
         G4cout << pos_x_A << " cm, ";
         man->FillNtupleDColumn(1, 166, pos_x_A);
+
 }
 G4cout << "" << G4endl;
 G4cout <<"(A) POSITION Y: " << G4endl;
@@ -299,6 +319,38 @@ for(const auto& pos_z_B :pos_layer_B_z){
 
 G4cout << "\n" << G4endl;
 
+/*
+if (!pos_layer_A_x.empty() && !pos_layer_A_z.empty()) {
+        G4double first_pos_x_a = pos_layer_A_x.front();
+        G4double first_pos_z_a = pos_layer_A_z.front();
+
+        G4cout << "XD (A) FIRST POSITION X: " << first_pos_x_a << " cm" << G4endl;
+        G4cout << "XD (A) FIRST POSITION Z: " << first_pos_z_a << " cm" << G4endl;
+
+        man->FillNtupleDColumn(1, 173, first_pos_x_a); // Columna fX_a
+        man->FillNtupleDColumn(1, 174, first_pos_z_a); // Columna fZ_a
+    } else {
+        // Si no hay datos, llena con un valor de referencia (por ejemplo, -9999)
+        man->FillNtupleDColumn(1, 173, 150);
+        man->FillNtupleDColumn(1, 174,150);
+    }
+
+    // Guardar e imprimir la primera posición para la capa B
+    if (!pos_layer_B_x.empty() && !pos_layer_B_z.empty()) {
+        G4double first_pos_x_b = pos_layer_B_x.front();
+        G4double first_pos_z_b = pos_layer_B_z.front();
+
+        G4cout << "XD (B) FIRST POSITION X: " << first_pos_x_b << " cm" << G4endl;
+        G4cout << "XD (B) FIRST POSITION Z: " << first_pos_z_b << " cm" << G4endl;
+
+        man->FillNtupleDColumn(1, 175, first_pos_x_b); // Columna fX_b
+        man->FillNtupleDColumn(1, 176, first_pos_z_b); // Columna fZ_b
+    } else {
+        // Si no hay datos, llena con un valor de referencia (por ejemplo, -9999)
+        man->FillNtupleDColumn(1, 175, 150);
+        man->FillNtupleDColumn(1, 176, 150);
+    }
+*/
 
 //-------------------------------------------------------------------------------------------
 

@@ -53,6 +53,11 @@ RunAction::RunAction(): photonHits(40, 0)
   man->CreateNtupleDColumn("Position_z_Detected_On_Layer_B"); //171
   man->CreateNtupleSColumn("PARTICLE_TYPE");//172
 
+  man->CreateNtupleDColumn("fX_a"); //173, 174, 175 y 176
+  man->CreateNtupleDColumn("fZ_a");
+  man->CreateNtupleDColumn("fX_b");
+  man->CreateNtupleDColumn("fZ_b");
+
 /*
   man->CreateNtupleDColumn("Total_Energy_Deposition");  
   man->CreateNtupleDColumn("Total_dEdx");  

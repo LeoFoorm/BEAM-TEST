@@ -18,14 +18,14 @@ PhysicsList::PhysicsList()
 	RegisterPhysics(new G4HadronPhysicsQGSP_BERT());
 
 
-	RegisterPhysics( new G4EmExtraPhysics() );
+	RegisterPhysics( new G4EmExtraPhysics());
 
-	RegisterPhysics( new G4HadronElasticPhysicsHP() );
+	RegisterPhysics( new G4HadronElasticPhysicsHP());
 
 
-	RegisterPhysics( new G4StoppingPhysics() );
+	RegisterPhysics( new G4StoppingPhysics());
 
-	RegisterPhysics( new G4IonPhysics() );
+	RegisterPhysics( new G4IonPhysics());
 
 }
 

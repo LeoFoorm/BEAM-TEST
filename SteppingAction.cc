@@ -42,8 +42,14 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
  
  G4Track* track = step->GetTrack();
 
+  
+  G4StepPoint *PreStep = step->GetPreStepPoint();
+  G4double ltime = PreStep->GetLocalTime();  
+  
  
-if(particle->GetParticleName()!= "opticalphoton"){
+if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+" ){   //<--- this could be helpful to filter the particles
+//particle->GetParticleName()!= "opticalphoton"
+//This is for consider all particles 
 
    G4double dEdxStep_A = 0.0; 
    G4double dEdxStep_B = 0.0;
@@ -103,10 +109,6 @@ if(particle->GetParticleName()!= "opticalphoton"){
          static map<string, vector<G4ThreeVector>> particlesLayerB;
          // X
 
-/*G4cout << "------------------------------------------------------------" << G4endl;
-G4cout << "PARTICLE DETECTED ON LAYERS ¡PRUEBA!" << G4endl;
-G4cout << "LAYER A:" << G4endl;
-G4cout <<""<< G4endl; */
          if (std::find(scoringVolumesA.begin(), scoringVolumesA.end(), barvolume) != scoringVolumesA.end())
         {
         
@@ -124,16 +126,18 @@ G4cout <<""<< G4endl; */
         fEventAction->Add_Positions_Layer_A_x(A_pos_x);
         fEventAction->Add_Positions_Layer_A_y(A_pos_y);
         fEventAction->Add_Positions_Layer_A_z(A_pos_z);
+        
 
+       // G4cout << G4endl;
+        // G4cout << "*"<<G4endl;
+        // G4cout << "Adding particle to Layer A: " << p_name << G4endl;
 
-       /* G4cout << "Posición de particula en conjunto A: ("
-               << position_A.x() / cm << ", "
-               << position_A.y() / cm << ", "
-               << position_A.z() / cm << ") cm \n"
-               << G4endl;
-            */
-            // X
-             particlesLayerA[particlename].emplace_back(POS_X, POS_Y, POS_Z);
+        fEventAction->Particle_Name_Pierced_Layer_A(p_name);
+
+       // G4cout << "*"<<G4endl;
+        // G4cout << G4endl;
+
+         particlesLayerA[particlename].emplace_back(POS_X, POS_Y, POS_Z);
    //---------------------------------------
       G4cout << "PARTICLE ON LAYER A |  "<<p_name << " | position: (" << position_A.x() /cm <<  ", " <<  position_A.y() / cm << ", "
                << position_A.z() / cm << ") cm "<< G4endl; 
@@ -161,18 +165,18 @@ G4cout <<""<< G4endl; */
          }
          }else if (std::find(scoringVolumesB.begin(), scoringVolumesB.end(), barvolume) != scoringVolumesB.end())
     {
-        particlesLayerB[particlename].emplace_back(POS_X, POS_Y, POS_Z);
+        particlesLayerB[particlename].emplace_back(POS_X, POS_Y, POS_Z); //?
     }
 
-//G4cout << "LAYER B:\n" << G4endl;
+
          if (std::find(scoringVolumesB.begin(), scoringVolumesB.end(), barvolume) != scoringVolumesB.end())
         {
 
         G4int copyNumB = touchedbar->GetCopyNumber(); 
         fEventAction->AddTraversedBar_B(copyNumB);
 
-            G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
-            //G4cout << "PARTICLE NAME ON LAYER B:    " << p_name << G4endl;
+          G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
+
             
         G4ThreeVector position_B = step->GetPostStepPoint()->GetPosition();
 
@@ -183,12 +187,7 @@ G4cout <<""<< G4endl; */
         fEventAction->Add_Positions_Layer_B_y(B_pos_y);
         fEventAction->Add_Positions_Layer_B_z(B_pos_z);
 
-        /*G4cout << "Posición de particula en conjunto B: ("
-               << position_B.x() / cm << ", "
-               << position_B.y() / cm << ", "
-               << position_B.z() / cm << ") cm \n"
-               << G4endl;*/
-
+       
 
         G4cout<< "PARTICLE ON LAYER B |  " << p_name << " | position: (" << position_B.x() /cm <<  ", " <<  position_B.y() / cm << ", "
                << position_B.z() / cm << ") cm "<< G4endl; 
@@ -216,48 +215,6 @@ G4cout <<""<< G4endl; */
          }
          }    
     
-    /*
-         //continuar aqui
-         // Imprimir información al final del evento
-    if (step->GetTrack()->GetTrackStatus() == fStopAndKill) // Al finalizar el track
-    {
-        G4cout << "-----*-*-*-*--*-*-*----------------------------------------" << G4endl;
-        G4cout << "PRUEBA! PARTICLES DETECTED ON LAYERS:" << G4endl;
-
-        // Imprimir información de la capa A
-        G4cout << "Layer A:" << G4endl;
-        for (const auto &entry : particlesLayerA)
-        {
-            const string &particlename = entry.first;
-            for (const auto &position : entry.second)
-            {
-                G4cout << "    " << std::setw(5) << particlename << " | Position: ("
-                       << std::fixed << std::setprecision(4)
-                       << position.x() << ", " << position.y() << ", " << position.z()
-                       << ") cm" << G4endl;
-            }
-        }
-
-        // Imprimir información de la capa B
-        G4cout << "PRUEBA lAyEr B:" << G4endl;
-        for (const auto &entry : particlesLayerB)
-        {
-            const std::string &particlename = entry.first;
-            for (const auto &position : entry.second)
-            {
-                G4cout << "    " << std::setw(5) << particlename << " | Position: ("
-                       << std::fixed << std::setprecision(4)
-                       << position.x() << ", " << position.y() << ", " << position.z()
-                       << ") cm" << G4endl;
-            }
-        }
-
-        G4cout << "------------------------------------------------------------" << G4endl;
-
-        // Limpiar los mapas para el próximo evento
-        particlesLayerA.clear();
-        particlesLayerB.clear();
-    }*/
 
 }
 
