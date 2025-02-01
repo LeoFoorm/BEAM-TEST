@@ -15,48 +15,50 @@ RunAction::RunAction(): photonHits(40, 0)
 
   man->CreateNtuple("Edep","Data from each event");
 
-  for (G4int i = 0; i < 40; i++) {
+  for (G4int i = 0; i < 5; i++) {
         std::stringstream columnName;
         columnName << "Energy_Deposition_MeV_On_Bar_" << i;
         man->CreateNtupleDColumn(columnName.str());
     }
 
-  for (G4int j = 0; j < 40; j++){
+  for (G4int j = 0; j < 5; j++){
       std::stringstream columnName;
       columnName << "dEdx_MeVmm_On_Bar_" << j;
       man->CreateNtupleDColumn(columnName.str());
   }
 
-  for (G4int k = 0; k < 40; k++){
+  for (G4int k = 0; k < 5; k++){
       std::stringstream columnName;
       columnName << "Photons_Detected_perEvent_by_SiPM_" << k;
       man->CreateNtupleDColumn(columnName.str());
   }
 
-   for (G4int l = 0; l < 40; l++){
+   for (G4int l = 0; l < 5; l++){
       std::stringstream columnName;
       columnName << "Photons_Generated_perEvent_on_Bar_" << l;
       man->CreateNtupleDColumn(columnName.str());
   }
-  man->CreateNtupleDColumn("Particle_Momentum_MeV"); //160
-  man->CreateNtupleDColumn("Particle_Momentum_GeV"); //161
-  man->CreateNtupleDColumn("angle"); //162
-  man->CreateNtupleDColumn("Copy_num_Bar_Traversed_A"); //163
-  man->CreateNtupleDColumn("Copy_num_Bar_Traversed_B"); //164
-  man->CreateNtupleIColumn("All_Triggers_Got_Activated");//165
+  man->CreateNtupleDColumn("Particle_Momentum_MeV"); //20
+  man->CreateNtupleDColumn("Particle_Momentum_GeV"); //21
+  man->CreateNtupleDColumn("angle"); //22
+  man->CreateNtupleDColumn("Copy_num_Bar_Traversed_A"); //23
+  man->CreateNtupleDColumn("Copy_num_Bar_Traversed_B"); //24
+  man->CreateNtupleIColumn("All_Triggers_Got_Activated");//25
   
-  man->CreateNtupleDColumn("Position_x_Detected_On_Layer_A"); //166
-  man->CreateNtupleDColumn("Position_y_Detected_On_Layer_A_(?)"); //167
-  man->CreateNtupleDColumn("Position_z_Detected_On_Layer_A"); //168
-  man->CreateNtupleDColumn("Position_x_Detected_On_Layer_B"); //169
-  man->CreateNtupleDColumn("Position_y_Detected_On_Layer_B_(?)"); //170
-  man->CreateNtupleDColumn("Position_z_Detected_On_Layer_B"); //171
-  man->CreateNtupleSColumn("PARTICLE_TYPE");//172
+  man->CreateNtupleDColumn("Position_x_Detected_On_Layer_A"); //26
+  man->CreateNtupleDColumn("Position_y_Detected_On_Layer_A_(?)"); //27
+  man->CreateNtupleDColumn("Position_z_Detected_On_Layer_A"); //28
+  man->CreateNtupleDColumn("Position_x_Detected_On_Layer_B"); //29
+  man->CreateNtupleDColumn("Position_y_Detected_On_Layer_B_(?)"); //30
+  man->CreateNtupleDColumn("Position_z_Detected_On_Layer_B"); //31
+  man->CreateNtupleSColumn("PARTICLE_TYPE");//32
 
+  /*
   man->CreateNtupleDColumn("fX_a"); //173, 174, 175 y 176
   man->CreateNtupleDColumn("fZ_a");
   man->CreateNtupleDColumn("fX_b");
   man->CreateNtupleDColumn("fZ_b");
+  */
 
 /*
   man->CreateNtupleDColumn("Total_Energy_Deposition");  

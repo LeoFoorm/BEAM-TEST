@@ -4,16 +4,16 @@
 using namespace std;
 
 
-EventAction::EventAction(RunAction*) : photonHits_event_A(20, 0), photonHits_event_B(20, 0)
+EventAction::EventAction(RunAction*) : photonHits_event_A(2, 0), photonHits_event_B(3, 0)
 {
-fEdepA.resize(20, 0.0); // Initialize with 20 bars, all values set to 0
-fEdepB.resize(20, 0.0); // Initialize with 20 bars, all values set to 0
+fEdepA.resize(2, 0.0); // Initialize with 20 bars, all values set to 0
+fEdepB.resize(3, 0.0); // Initialize with 20 bars, all values set to 0
 
-fTotaldEdx_A.resize(20, 0.0);
-fTotaldEdx_B.resize(20, 0.0);
+fTotaldEdx_A.resize(2, 0.0);
+fTotaldEdx_B.resize(3, 0.0);
 
-fGenerated_photons_A.resize(20, 0.0);
-fGenerated_photons_B.resize(20, 0.0);
+fGenerated_photons_A.resize(2, 0.0);
+fGenerated_photons_B.resize(3, 0.0);
 
 muonCount = 0;
 
@@ -53,17 +53,17 @@ EventAction::~EventAction()
 
 void EventAction::BeginOfEventAction(const G4Event*) 
 {
-    photonHits_event_A.assign(20, 0);
-    photonHits_event_B.assign(20, 0);
+    photonHits_event_A.assign(2, 0);
+    photonHits_event_B.assign(3, 0);
     
-    fEdepA.assign(20, 0.0); 
-    fEdepB.assign(20, 0.0); 
+    fEdepA.assign(2, 0.0); 
+    fEdepB.assign(3, 0.0); 
 
-    fTotaldEdx_A.assign(20, 0.0);
-    fTotaldEdx_B.assign(20, 0.0);
+    fTotaldEdx_A.assign(2, 0.0);
+    fTotaldEdx_B.assign(3, 0.0);
 
-    fGenerated_photons_A.assign(20, 0.0);
-    fGenerated_photons_B.assign(20, 0.0);
+    fGenerated_photons_A.assign(2, 0.0);
+    fGenerated_photons_B.assign(3, 0.0);
 
  muonCount++;
  G4cout << "EVENT ID: "  << muonCount << G4endl;
@@ -157,7 +157,7 @@ G4cout << "\n"<< G4endl;
 
     G4int ALL_TRIGGERS_INT = static_cast<G4int>(all_triggers_work );
 
-    man->FillNtupleIColumn(1, 165, ALL_TRIGGERS_INT);
+    man->FillNtupleIColumn(1, 25, ALL_TRIGGERS_INT);
 
 
 //------------------------------------------------------------------------------------------
@@ -240,11 +240,11 @@ G4cout << "" << G4endl;
 G4cout << "LAYER A PIERCED BAR ID: ";
 if (traversed_Bars_A.empty()) {
     G4cout << "-1  (-1 means no particle has passed.)";
-    man->FillNtupleDColumn(1, 163, -1);
+    man->FillNtupleDColumn(1, 23, -1);
 } else {
     for (auto bar_a : traversed_Bars_A) {
         G4cout << bar_a << " ";
-        man->FillNtupleDColumn(1,163,bar_a);
+        man->FillNtupleDColumn(1,23,bar_a);
     }
 }
  G4cout <<"" <<G4endl;
@@ -253,7 +253,7 @@ if (traversed_Bars_A.empty()) {
 G4cout << "LAYER B PIERCED BAR ID: ";
     for (auto bar_b : traversed_Bars_B) {
         G4cout << bar_b << " ";
-        man->FillNtupleDColumn(1,164,bar_b);
+        man->FillNtupleDColumn(1,24,bar_b);
     }
 G4cout <<"" <<G4endl;
 
@@ -270,6 +270,7 @@ if (particles_names_A.empty()) {
 } else {
     for (auto p_name : particles_names_A) {
         G4cout << p_name << ", ";
+        man->FillNtupleSColumn(1, 32, p_name);
     }}
 
 
@@ -281,20 +282,20 @@ G4cout << G4endl;
 G4cout <<"(A) POSITION X : " << G4endl;
 for(const auto& pos_x_A :pos_layer_A_x){
         G4cout << pos_x_A << " cm, ";
-        man->FillNtupleDColumn(1, 166, pos_x_A);
+        man->FillNtupleDColumn(1, 26, pos_x_A);
 
 }
 G4cout << "" << G4endl;
 G4cout <<"(A) POSITION Y: " << G4endl;
 for(const auto& pos_y_A :pos_layer_A_y){
         G4cout << pos_y_A << " cm, ";
-        man->FillNtupleDColumn(1, 167, pos_y_A);
+        man->FillNtupleDColumn(1, 27, pos_y_A);
 }
 G4cout << "" << G4endl;
 G4cout <<"(A) POSITION Z: " << G4endl;
 for(const auto& pos_z_A :pos_layer_A_z){
         G4cout << pos_z_A << " cm, ";
-        man->FillNtupleDColumn(1, 168, pos_z_A);
+        man->FillNtupleDColumn(1, 28, pos_z_A);
 }
 
 G4cout << "" << G4endl;
@@ -302,19 +303,19 @@ G4cout << "" << G4endl;
 G4cout <<"(B) POSITION X: "<< G4endl;
 for(const auto& pos_x_B :pos_layer_B_x){
         G4cout << pos_x_B << " cm, ";
-        man->FillNtupleDColumn(1, 169, pos_x_B);
+        man->FillNtupleDColumn(1, 29, pos_x_B);
 }
 G4cout << "" << G4endl;
 G4cout <<"(B) POSITION Y: " << G4endl;
 for(const auto& pos_y_B :pos_layer_B_y){
         G4cout << pos_y_B << " cm, ";
-        man->FillNtupleDColumn(1, 170, pos_y_B);
+        man->FillNtupleDColumn(1, 30, pos_y_B);
 }
 G4cout << "" << G4endl;
 G4cout <<"(B) POSITION Z: " << G4endl;
 for(const auto& pos_z_B :pos_layer_B_z){
         G4cout << pos_z_B << " cm, ";
-        man->FillNtupleDColumn(1, 171, pos_z_B);
+        man->FillNtupleDColumn(1, 31, pos_z_B);
 }
 
 G4cout << "\n" << G4endl;
@@ -354,7 +355,7 @@ if (!pos_layer_A_x.empty() && !pos_layer_A_z.empty()) {
 
 //-------------------------------------------------------------------------------------------
 
-
+/*
 if (fEdepA.size() != fEdepB.size() ) {
     G4cerr << "Error: los tamaños de las listas no coinciden (EDEP)." << G4endl;
     return;
@@ -392,7 +393,7 @@ if (fGenerated_photons_A.size() != fGenerated_photons_B.size() ) {
    for (size_t i = 0; i < fGenerated_photons_A.size(); ++i) {
         TOTAL_Generated_photons += fGenerated_photons_A[i] + fGenerated_photons_B[i];
     }
-
+*/
 
 
     // Guardar en el Ntuple
