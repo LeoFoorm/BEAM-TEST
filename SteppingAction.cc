@@ -46,12 +46,8 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
   G4StepPoint *PreStep = step->GetPreStepPoint();
   G4double ltime = PreStep->GetLocalTime();  
   
- 
-if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+" ){   //<--- this could be helpful to filter the particles
-//particle->GetParticleName()!= "opticalphoton"
-//This is for consider all particles 
-
-   G4double dEdxStep_A = 0.0; 
+  if(particle->GetParticleName() == "mu+" || particle->GetParticleName() == "pi+"){
+    G4double dEdxStep_A = 0.0;
    G4double dEdxStep_B = 0.0;
    G4double generated_photons_A = 0.0;
    G4double generated_photons_B = 0.0;
@@ -116,7 +112,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
         fEventAction->AddTraversedBar_A(copyNumA);
 
          G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
-         //G4cout << "PARTICLE NAME ON LAYER A:    " << p_name << G4endl;
+
 
         G4ThreeVector position_A = step->GetPostStepPoint()->GetPosition();
 
@@ -133,9 +129,6 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
         // G4cout << "Adding particle to Layer A: " << p_name << G4endl;
 
         fEventAction->Particle_Name_Pierced_Layer_A(p_name);
-
-       // G4cout << "*"<<G4endl;
-        // G4cout << G4endl;
 
          particlesLayerA[particlename].emplace_back(POS_X, POS_Y, POS_Z);
    //---------------------------------------
@@ -187,7 +180,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
         fEventAction->Add_Positions_Layer_B_y(B_pos_y);
         fEventAction->Add_Positions_Layer_B_z(B_pos_z);
 
-       
+        fEventAction->Particle_Name_Pierced_Layer_B(p_name);      
 
         G4cout<< "PARTICLE ON LAYER B |  " << p_name << " | position: (" << position_B.x() /cm <<  ", " <<  position_B.y() / cm << ", "
                << position_B.z() / cm << ") cm "<< G4endl; 

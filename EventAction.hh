@@ -25,7 +25,7 @@ public:
 
 void Add_DetectedPhotons_event_A_SiPMs (G4int sipmID_a)
 {
-    if (sipmID_a >= 0 && sipmID_a < 20 )
+    if (sipmID_a >= 0 && sipmID_a < 2 )
     {
         photonHits_event_A[sipmID_a]++;
     }
@@ -35,7 +35,7 @@ std::vector<G4int> GetPhotonHits_A() const{return photonHits_event_A;}
 
 void Add_DetectedPhotons_event_B_SiPMs (G4int sipmID_b)
 {
-    if (sipmID_b >= 0 && sipmID_b < 20 )
+    if (sipmID_b >= 0 && sipmID_b < 3 )
     {
         photonHits_event_B[sipmID_b]++;
     }
@@ -210,6 +210,14 @@ void Particle_Name_Pierced_Layer_A(G4String name_a){
 
 vector<G4String> Get_particle_names_A() const {return particles_names_A;}
 
+
+
+void Particle_Name_Pierced_Layer_B(G4String name_b){
+    particles_names_B.push_back(name_b);
+}
+
+vector<G4String> Get_particle_names_B() const {return particles_names_B;}
+
 //---------------------------------------------------------
 
 private:
@@ -239,6 +247,7 @@ vector<G4double> pos_layer_B_y;
 vector<G4double> pos_layer_B_z;
 
 vector<G4String> particles_names_A;
+vector<G4String> particles_names_B;
 
 G4double TOTAL_Edep;
 G4double TOTAL_dEdx;

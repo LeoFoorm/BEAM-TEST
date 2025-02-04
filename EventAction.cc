@@ -43,6 +43,7 @@ muonCount = 0;
     pos_layer_B_z.clear();
 
     particles_names_A.clear();
+    particles_names_B.clear();
 }
 
 
@@ -97,6 +98,7 @@ void EventAction::BeginOfEventAction(const G4Event*)
     pos_layer_B_z.clear();
 
     particles_names_A.clear();
+    particles_names_B.clear();
 }
 
 
@@ -179,6 +181,17 @@ for (size_t j = 0; j < fEdepA.size(); j++){
     
 }
 
+
+G4cout << "" << G4endl;
+
+for (size_t i = 0; i < fEdepB.size(); ++i) {
+       TOTAL_Edep += fEdepA[i] + fEdepB[i];
+
+    }
+
+    G4cout << "TOTAL EDEP:  " << TOTAL_Edep << G4endl;
+
+    man->FillNtupleDColumn(1, 33, TOTAL_Edep);
     
 //------------------------------------------------------------------------------------------
 G4cout << "" << G4endl;
@@ -199,6 +212,17 @@ for (size_t l = 0; l < fTotaldEdx_B.size(); l++){
      man->FillNtupleDColumn(1, l + fTotaldEdx_A.size() + fEdepA.size() + fEdepB.size(), fTotaldEdx_B[l] );
 }
 
+
+G4cout << "" << G4endl;
+
+    for (size_t i = 0; i < fTotaldEdx_B.size(); ++i) {
+        TOTAL_dEdx += fTotaldEdx_A[i] + fTotaldEdx_B[i];
+    }
+     G4cout << "total dE/dx:  " << TOTAL_dEdx <<"\n"<< G4endl;
+
+
+    
+    man->FillNtupleDColumn(1, 34, TOTAL_dEdx);
 //------------------------------------------------------------------------------------------
 G4cout << "\n------------------------------------------------------------" << G4endl;
 G4cout << "" << G4endl;
@@ -217,6 +241,39 @@ for (size_t n = 0; n < photonHits_event_B.size(); n++){
      man->FillNtupleDColumn(1, n + photonHits_event_A.size() + fTotaldEdx_B.size()+ fTotaldEdx_A.size() + fEdepB.size() + fEdepA.size() ,  photonHits_event_B[n] );
 }
 
+
+//             TO GET THE RIGHT NUMBER OF DETECTED PHOTONS 
+
+G4int photons_detected_real_A = 0.0;
+
+G4int photons_detected_real_B = 0.0;
+
+    for (auto bar : traversed_Bars_A) {
+        if(bar >=0 && bar <2){
+            photons_detected_real_A += photonHits_event_A[bar];
+        } else{
+            G4cerr << " ERROR: índice inválido en traversed_Bars_A: " << bar << G4endl;
+        }   
+    }
+    
+    for (auto bar : traversed_Bars_B) {
+        if(bar >=2 && bar <5){
+            photons_detected_real_B += photonHits_event_B[bar-2];
+        } else {
+            G4cerr << "ERROR: índice inválido en traversed_Bars_B: " << bar << G4endl;
+        }
+    }
+
+    if(photons_detected_real_A > 0 || photons_detected_real_B > 0){
+    TOTAL_Detected_photons = photons_detected_real_A + photons_detected_real_B;
+    }
+
+    G4cout << "\n" << G4endl;
+    G4cout <<"TOTAL DETECTED PHOTONS: "<< TOTAL_Detected_photons << " photons \n"<< G4endl;       
+            
+    man->FillNtupleIColumn(1, 35, TOTAL_Detected_photons);
+  
+
 //------------------------------------------------------------------------------------------
 G4cout << "" << G4endl;
 G4cout << "GENERATED PHOTONS:   " << G4endl;
@@ -233,6 +290,18 @@ for (size_t v = 0; v < fGenerated_photons_B.size(); v++){
         }
     man->FillNtupleDColumn(1, v + fGenerated_photons_A.size() + photonHits_event_B.size() + photonHits_event_A.size() + fTotaldEdx_B.size()+ fTotaldEdx_A.size() + fEdepB.size() + fEdepA.size() ,   fGenerated_photons_B[v] ); 
 }
+
+
+G4cout << "\n" << G4endl;
+
+for (size_t i = 0; i < 5; ++i) {
+        TOTAL_Generated_photons += fGenerated_photons_A[i] + fGenerated_photons_B[i];
+    }
+
+    G4cout << "TOTAL GENERATED PHOTONS:  " << TOTAL_Generated_photons <<" photons "<< G4endl;
+
+      man->FillNtupleDColumn(1, 36, TOTAL_Generated_photons);
+
 G4cout << "\n------------------------------------------------------------" << G4endl;
 
  //-------------------------------------------------------------------------------------------
@@ -273,6 +342,16 @@ if (particles_names_A.empty()) {
         man->FillNtupleSColumn(1, 32, p_name);
     }}
 
+G4cout << G4endl;
+G4cout << "PARTICLES ON LAYER B: " <<  G4endl;
+
+if (particles_names_B.empty()) {
+    G4cout << "**No particles pierced Layer B in this event." << G4endl;
+} else {
+    for (auto p_name : particles_names_B) {
+        G4cout << p_name << ", ";
+        man->FillNtupleSColumn(1, 37, p_name);
+    }}
 
 
 G4cout << G4endl;
@@ -320,87 +399,8 @@ for(const auto& pos_z_B :pos_layer_B_z){
 
 G4cout << "\n" << G4endl;
 
-/*
-if (!pos_layer_A_x.empty() && !pos_layer_A_z.empty()) {
-        G4double first_pos_x_a = pos_layer_A_x.front();
-        G4double first_pos_z_a = pos_layer_A_z.front();
-
-        G4cout << "XD (A) FIRST POSITION X: " << first_pos_x_a << " cm" << G4endl;
-        G4cout << "XD (A) FIRST POSITION Z: " << first_pos_z_a << " cm" << G4endl;
-
-        man->FillNtupleDColumn(1, 173, first_pos_x_a); // Columna fX_a
-        man->FillNtupleDColumn(1, 174, first_pos_z_a); // Columna fZ_a
-    } else {
-        // Si no hay datos, llena con un valor de referencia (por ejemplo, -9999)
-        man->FillNtupleDColumn(1, 173, 150);
-        man->FillNtupleDColumn(1, 174,150);
-    }
-
-    // Guardar e imprimir la primera posición para la capa B
-    if (!pos_layer_B_x.empty() && !pos_layer_B_z.empty()) {
-        G4double first_pos_x_b = pos_layer_B_x.front();
-        G4double first_pos_z_b = pos_layer_B_z.front();
-
-        G4cout << "XD (B) FIRST POSITION X: " << first_pos_x_b << " cm" << G4endl;
-        G4cout << "XD (B) FIRST POSITION Z: " << first_pos_z_b << " cm" << G4endl;
-
-        man->FillNtupleDColumn(1, 175, first_pos_x_b); // Columna fX_b
-        man->FillNtupleDColumn(1, 176, first_pos_z_b); // Columna fZ_b
-    } else {
-        // Si no hay datos, llena con un valor de referencia (por ejemplo, -9999)
-        man->FillNtupleDColumn(1, 175, 150);
-        man->FillNtupleDColumn(1, 176, 150);
-    }
-*/
-
-//-------------------------------------------------------------------------------------------
-
-/*
-if (fEdepA.size() != fEdepB.size() ) {
-    G4cerr << "Error: los tamaños de las listas no coinciden (EDEP)." << G4endl;
-    return;
-}
-
-if (fTotaldEdx_A.size() != fTotaldEdx_A.size() ) {
-    G4cerr << "Error: los tamaños de las listas no coinciden (dEdx)." << G4endl;
-    return;
-}
-
-if (photonHits_event_A.size() != photonHits_event_B.size() ) {
-    G4cerr << "Error: los tamaños de las listas no coinciden (Detected Photons)." << G4endl;
-    return;
-}
-
-if (fGenerated_photons_A.size() != fGenerated_photons_B.size() ) {
-    G4cerr << "Error: los tamaños de las listas no coinciden (Generated Photons)." << G4endl;
-    return;
-}
 
 
-   for (size_t i = 0; i < fEdepA.size(); ++i) {
-       TOTAL_Edep += fEdepA[i] + fEdepB[i];
-
-    }
-
-     for (size_t i = 0; i < fTotaldEdx_A.size(); ++i) {
-        TOTAL_dEdx += fTotaldEdx_A[i] + fTotaldEdx_B[i];
-    }
-
-    for (size_t i = 0; i < photonHits_event_A.size(); ++i) {
-        TOTAL_Detected_photons += photonHits_event_A[i] + photonHits_event_B[i];
-    }
-
-   for (size_t i = 0; i < fGenerated_photons_A.size(); ++i) {
-        TOTAL_Generated_photons += fGenerated_photons_A[i] + fGenerated_photons_B[i];
-    }
-*/
-
-
-    // Guardar en el Ntuple
-    //man->FillNtupleDColumn(1, 1, TOTAL_Edep);
-     //man->FillNtupleDColumn(1, 1, TOTAL_dEdx);
-     //man->FillNtupleDColumn(1, 1, TOTAL_Detected_photons);
-     //man->FillNtupleDColumn(1, 1, TOTAL_Generated_photons);
 
 
    

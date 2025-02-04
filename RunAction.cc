@@ -2,7 +2,7 @@
 
 #include "RunAction.hh"
 
-RunAction::RunAction(): photonHits(40, 0)
+RunAction::RunAction()
 {
  G4AnalysisManager *man = G4AnalysisManager::Instance();
 
@@ -53,19 +53,12 @@ RunAction::RunAction(): photonHits(40, 0)
   man->CreateNtupleDColumn("Position_z_Detected_On_Layer_B"); //31
   man->CreateNtupleSColumn("PARTICLE_TYPE");//32
 
-  /*
-  man->CreateNtupleDColumn("fX_a"); //173, 174, 175 y 176
-  man->CreateNtupleDColumn("fZ_a");
-  man->CreateNtupleDColumn("fX_b");
-  man->CreateNtupleDColumn("fZ_b");
-  */
+  man->CreateNtupleDColumn("Total_Energy_Deposition");  // 33
+  man->CreateNtupleDColumn("Total_dEdx");  // 34
+  man->CreateNtupleIColumn("Total_Photons_Generated"); //35
+  man->CreateNtupleIColumn("Total_Photons_Detected");  //36
 
-/*
-  man->CreateNtupleDColumn("Total_Energy_Deposition");  
-  man->CreateNtupleDColumn("Total_dEdx");  
-  man->CreateNtupleDColumn("Total_Photons_Generated"); 
-  man->CreateNtupleDColumn("Total_Photons_Detected");
-*/
+  man->CreateNtupleSColumn("PARTICLE_TYPE_B");//37
   
 
   man->FinishNtuple(1);
@@ -82,7 +75,7 @@ void RunAction:: BeginOfRunAction(const G4Run* run)
 {
  G4AnalysisManager *man = G4AnalysisManager::Instance(); 
 
- photonHits.assign(40, 0);  
+ 
 
 
  G4int runID = run->GetRunID();
@@ -92,7 +85,7 @@ void RunAction:: BeginOfRunAction(const G4Run* run)
 
  man->OpenFile("Output"+strRunID.str()+".root");
 
- //photonHits = 0; 
+
 }
 
 
@@ -100,11 +93,6 @@ void RunAction::EndOfRunAction(const G4Run*)
 {
  G4AnalysisManager *man = G4AnalysisManager::Instance();
 
- 
-  //G4cout << "NUMBER OF PHOTONS DETECTED: " << photonHits << G4endl; 
-
-  //man->FillNtupleDColumn(1,0,photonHits); //total
- 
  man->Write();
  man->CloseFile();
 }
