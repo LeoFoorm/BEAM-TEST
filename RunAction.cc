@@ -56,7 +56,7 @@ RunAction::RunAction()
   man->CreateNtupleDColumn("Total_Energy_Deposition");  // 33
   man->CreateNtupleDColumn("Total_dEdx");  // 34
   man->CreateNtupleIColumn("Total_Photons_Generated"); //35
-  man->CreateNtupleIColumn("Total_Photons_Detected");  //36
+  man->CreateNtupleDColumn("Total_Photons_Detected");  //36
 
   man->CreateNtupleSColumn("PARTICLE_TYPE_B");//37
   
@@ -97,3 +97,4 @@ void RunAction::EndOfRunAction(const G4Run*)
  man->CloseFile();
 }
 
+//

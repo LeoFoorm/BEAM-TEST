@@ -173,7 +173,7 @@ for (size_t i = 0; i < fEdepA.size(); i++){
      man->FillNtupleDColumn(1, i, fEdepA[i]);  
 }
 
-for (size_t j = 0; j < fEdepA.size(); j++){
+for (size_t j = 0; j < fEdepB.size(); j++){
     if(fEdepB[j]>0){
        G4cout << "BAR B | " << "ID: "<< j + 2  << " |  Edep:  " << fEdepB[j] << "  MeV" << G4endl; 
     }

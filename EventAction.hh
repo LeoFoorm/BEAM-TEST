@@ -97,7 +97,7 @@ void AddPhotonG_UsingEdep_A(G4int PhotonGen_a, G4double generated_photons_A)
         fGenerated_photons_A[PhotonGen_a] += generated_photons_A;
     }
  }
- std::vector<G4int> GetPhotonCount_Edep_A() const { return fGenerated_photons_A; }
+ std::vector<G4double> GetPhotonCount_Edep_A() const { return fGenerated_photons_A; }
 
 
 void AddPhotonG_UsingEdep_B(G4int PhotonGen_b, G4double generated_photons_B)
@@ -107,7 +107,7 @@ void AddPhotonG_UsingEdep_B(G4int PhotonGen_b, G4double generated_photons_B)
         fGenerated_photons_B[PhotonGen_b] += generated_photons_B;
     }
  }
- std::vector<G4int> GetPhotonCount_Edep_B() const { return fGenerated_photons_B; }
+ std::vector<G4double> GetPhotonCount_Edep_B() const { return fGenerated_photons_B; }
 
 
 //---------------------------------------------------------
@@ -224,6 +224,7 @@ private:
 
 std::vector<G4int> photonHits_event_A;
 std::vector<G4int> photonHits_event_B;
+
 std::vector<G4double> localTimes;
  
 std::vector<G4double> fEdepA;
@@ -232,8 +233,8 @@ std::vector<G4double> fEdepB;
 std::vector<G4double> fTotaldEdx_A;
 std::vector<G4double> fTotaldEdx_B;
 
-std::vector<G4int> fGenerated_photons_A;
-std::vector<G4int> fGenerated_photons_B;
+std::vector<G4double> fGenerated_photons_A;     //I chaged for double
+std::vector<G4double> fGenerated_photons_B;
 
 std::vector<G4int> traversed_Bars_A; 
 std::vector<G4int> traversed_Bars_B; 
