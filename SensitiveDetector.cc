@@ -21,15 +21,13 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist)
     G4StepPoint *preStepPoint = aStep->GetPreStepPoint();
     G4StepPoint *postStepPoint = aStep->GetPostStepPoint();
 
-    //G4ThreeVector posPhoton = preStepPoint->GetPosition();
-    //G4ThreeVector momentumphoton = preStepPoint->GetMomentum();
 
     const G4VTouchable *touchable = aStep->GetPreStepPoint()->GetTouchable();
     G4VPhysicalVolume *PhysVol = touchable->GetVolume();
     G4ThreeVector posDetector = PhysVol->GetTranslation();
+
     G4int copynum = touchable->GetCopyNumber();
-    //G4cout << "Copy number: " << copynum <<G4endl;
-   
+
 
      // Retrieve of run and event action
     const RunAction *runaction = static_cast< const RunAction* >(G4RunManager::GetRunManager()->GetUserRunAction());
@@ -53,4 +51,3 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist)
   
 }
 
-//

@@ -46,8 +46,10 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
   G4StepPoint *PreStep = step->GetPreStepPoint();
   G4double ltime = PreStep->GetLocalTime();  
   
-  if(particle->GetParticleName() == "mu+" || particle->GetParticleName() == "pi+"){
-    G4double dEdxStep_A = 0.0;
+ 
+if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+" ){   
+
+   G4double dEdxStep_A = 0.0; 
    G4double dEdxStep_B = 0.0;
    G4double generated_photons_A = 0.0;
    G4double generated_photons_B = 0.0;
@@ -92,7 +94,7 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
           }  
 
                
-         // X
+         /* ---------------------------------------------------------------------------------
          G4String particlename = step->GetTrack()->GetDefinition()->GetParticleName();
            
          G4ThreeVector POS =  step->GetPostStepPoint()->GetPosition();
@@ -100,41 +102,41 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
          G4double POS_Y = POS.y() /cm;
          G4double POS_Z = POS.z() /cm;
 
-         // Mapas para almacenar partículas y posiciones por capa
+          Mapas para almacenar partículas y posiciones por capa
          static map<string, vector<G4ThreeVector>> particlesLayerA;
          static map<string, vector<G4ThreeVector>> particlesLayerB;
-         // X
-
+         */
+         // ---------------------------------------------------------------------------------
          if (std::find(scoringVolumesA.begin(), scoringVolumesA.end(), barvolume) != scoringVolumesA.end())
         {
         
         G4int copyNumA = touchedbar->GetCopyNumber(); // Número de copia de la barra
         fEventAction->AddTraversedBar_A(copyNumA);
 
+
          G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
-
-
+       
         G4ThreeVector position_A = step->GetPostStepPoint()->GetPosition();
-
+       
         G4double A_pos_x = position_A.x()/(cm);
         G4double A_pos_y = position_A.y()/(cm);
         G4double A_pos_z = position_A.z()/(cm);
         fEventAction->Add_Positions_Layer_A_x(A_pos_x);
         fEventAction->Add_Positions_Layer_A_y(A_pos_y);
         fEventAction->Add_Positions_Layer_A_z(A_pos_z);
-        
-
-       // G4cout << G4endl;
-        // G4cout << "*"<<G4endl;
-        // G4cout << "Adding particle to Layer A: " << p_name << G4endl;
+      
 
         fEventAction->Particle_Name_Pierced_Layer_A(p_name);
 
-         particlesLayerA[particlename].emplace_back(POS_X, POS_Y, POS_Z);
+      
+   //particlesLayerA[particlename].emplace_back(POS_X, POS_Y, POS_Z);
+  
+  
    //---------------------------------------
       G4cout << "PARTICLE ON LAYER A |  "<<p_name << " | position: (" << position_A.x() /cm <<  ", " <<  position_A.y() / cm << ", "
                << position_A.z() / cm << ") cm "<< G4endl; 
    //---------------------------------------
+
 
          G4double edep_A = step->GetTotalEnergyDeposit();
 
@@ -156,11 +158,13 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
             fEventAction->AddEdepA(a, edep_A);
             fEventAction->AccumulatedEdx_A(a, dEdxStep_A);     
          }
-         }else if (std::find(scoringVolumesB.begin(), scoringVolumesB.end(), barvolume) != scoringVolumesB.end())
+        }
+        /*
+         else if (std::find(scoringVolumesB.begin(), scoringVolumesB.end(), barvolume) != scoringVolumesB.end())
     {
-        particlesLayerB[particlename].emplace_back(POS_X, POS_Y, POS_Z); //?
+        particlesLayerB[particlename].emplace_back(POS_X, POS_Y, POS_Z); 
     }
-
+    */
 
          if (std::find(scoringVolumesB.begin(), scoringVolumesB.end(), barvolume) != scoringVolumesB.end())
         {
@@ -168,9 +172,8 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
         G4int copyNumB = touchedbar->GetCopyNumber(); 
         fEventAction->AddTraversedBar_B(copyNumB);
 
-          G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
-
-            
+        G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
+  
         G4ThreeVector position_B = step->GetPostStepPoint()->GetPosition();
 
         G4double B_pos_x = position_B.x()/(cm);
@@ -180,10 +183,14 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
         fEventAction->Add_Positions_Layer_B_y(B_pos_y);
         fEventAction->Add_Positions_Layer_B_z(B_pos_z);
 
-        fEventAction->Particle_Name_Pierced_Layer_B(p_name);      
 
+       fEventAction->Particle_Name_Pierced_Layer_B(p_name);
+
+
+        //---------------------------------------
         G4cout<< "PARTICLE ON LAYER B |  " << p_name << " | position: (" << position_B.x() /cm <<  ", " <<  position_B.y() / cm << ", "
                << position_B.z() / cm << ") cm "<< G4endl; 
+        //---------------------------------------
 
 
          G4double edep_B = step->GetTotalEnergyDeposit();

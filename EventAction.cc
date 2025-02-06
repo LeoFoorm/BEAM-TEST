@@ -20,7 +20,7 @@ muonCount = 0;
     traversed_Bars_A.clear();
     traversed_Bars_B.clear();
 
-   // Hit_particle_passed_two_layers = false;
+    Hit = false;
     Sumcopies = 0;
 
     TOTAL_Edep = 0.0;
@@ -43,7 +43,6 @@ muonCount = 0;
     pos_layer_B_z.clear();
 
     particles_names_A.clear();
-    particles_names_B.clear();
 }
 
 
@@ -71,11 +70,10 @@ void EventAction::BeginOfEventAction(const G4Event*)
  G4cout << "------------------------------------------------------------" << G4endl;
 
 
-
     traversed_Bars_A.clear();
     traversed_Bars_B.clear();  
 
-    //Hit_particle_passed_two_layers = false;
+    Hit = false;
     Sumcopies = 0;    
 
     TOTAL_Edep = 0.0;
@@ -98,7 +96,6 @@ void EventAction::BeginOfEventAction(const G4Event*)
     pos_layer_B_z.clear();
 
     particles_names_A.clear();
-    particles_names_B.clear();
 }
 
 
@@ -159,6 +156,16 @@ G4cout << "\n"<< G4endl;
 
     G4int ALL_TRIGGERS_INT = static_cast<G4int>(all_triggers_work );
 
+    G4cout << "ALL TRIGGERS DETECTED: " << ALL_TRIGGERS_INT << G4endl;
+
+    G4cout << G4endl;
+    /*
+    if(){
+
+    }else{
+
+    }*/
+
     man->FillNtupleIColumn(1, 25, ALL_TRIGGERS_INT);
 
 
@@ -192,7 +199,7 @@ for (size_t i = 0; i < fEdepB.size(); ++i) {
     G4cout << "TOTAL EDEP:  " << TOTAL_Edep << G4endl;
 
     man->FillNtupleDColumn(1, 33, TOTAL_Edep);
-    
+        
 //------------------------------------------------------------------------------------------
 G4cout << "" << G4endl;
 G4cout << "dE/dx (MeV/):   " << G4endl;
@@ -223,6 +230,7 @@ G4cout << "" << G4endl;
 
     
     man->FillNtupleDColumn(1, 34, TOTAL_dEdx);
+
 //------------------------------------------------------------------------------------------
 G4cout << "\n------------------------------------------------------------" << G4endl;
 G4cout << "" << G4endl;
@@ -240,7 +248,6 @@ for (size_t n = 0; n < photonHits_event_B.size(); n++){
         }
      man->FillNtupleDColumn(1, n + photonHits_event_A.size() + fTotaldEdx_B.size()+ fTotaldEdx_A.size() + fEdepB.size() + fEdepA.size() ,  photonHits_event_B[n] );
 }
-
 
 //             TO GET THE RIGHT NUMBER OF DETECTED PHOTONS 
 
@@ -268,11 +275,13 @@ G4int photons_detected_real_B = 0.0;
     TOTAL_Detected_photons = photons_detected_real_A + photons_detected_real_B;
     }
 
+
     G4cout << "\n" << G4endl;
     G4cout <<"TOTAL DETECTED PHOTONS: "<< TOTAL_Detected_photons << " photons \n"<< G4endl;       
             
     man->FillNtupleIColumn(1, 36, TOTAL_Detected_photons);
   
+
 
 //------------------------------------------------------------------------------------------
 G4cout << "" << G4endl;
@@ -306,7 +315,7 @@ G4cout << "\n------------------------------------------------------------" << G4
 
  //-------------------------------------------------------------------------------------------
 G4cout << "" << G4endl;
-G4cout << "LAYER A PIERCED BAR ID: ";
+G4cout << "LAYER A | ID: ";
 if (traversed_Bars_A.empty()) {
     G4cout << "-1  (-1 means no particle has passed.)";
     man->FillNtupleDColumn(1, 23, -1);
@@ -316,20 +325,41 @@ if (traversed_Bars_A.empty()) {
         man->FillNtupleDColumn(1,23,bar_a);
     }
 }
- G4cout <<"" <<G4endl;
+ G4cout <<G4endl;
 
 
-G4cout << "LAYER B PIERCED BAR ID: ";
+G4cout << "LAYER B | ID: ";
+ if(traversed_Bars_B.empty()){
+        G4cout<< "non (0)";
+        man->FillNtupleDColumn(1,24,0);
+    }else{
     for (auto bar_b : traversed_Bars_B) {
         G4cout << bar_b << " ";
         man->FillNtupleDColumn(1,24,bar_b);
     }
-G4cout <<"" <<G4endl;
+    }
 
+
+G4cout<<G4endl;
 int Sumcopies = traversed_Bars_A.size() + traversed_Bars_B.size();
 G4cout << "TOTAL AMOUNT OF PIERCED BARS:  " << Sumcopies << "  barras" << "\n" << G4endl; 
 
+G4cout<<G4endl;
+G4cout << "HIT: ";
+if(Sumcopies >0){
+    G4cout << "* YES * " <<G4endl;
+    Hit = true;
+}else{
+    G4cout << "* NO * " <<G4endl;
+    Hit = false;
+}
 
+G4int hit_int= static_cast<G4int>(Hit);
+
+ man->FillNtupleIColumn(1, 38, hit_int);
+
+
+//-------------------------------------------------------------------------------------------
 
 G4cout << G4endl;
 G4cout << "PARTICLES ON LAYER A: " <<  G4endl;
@@ -341,6 +371,7 @@ if (particles_names_A.empty()) {
         G4cout << p_name << ", ";
         man->FillNtupleSColumn(1, 32, p_name);
     }}
+
 
 G4cout << G4endl;
 G4cout << "PARTICLES ON LAYER B: " <<  G4endl;
@@ -354,8 +385,9 @@ if (particles_names_B.empty()) {
     }}
 
 
+
 G4cout << G4endl;
-G4cout << "\n------------------------------------------------------------" << G4endl;
+G4cout << "------------------------------------------------------------" << G4endl;
 G4cout << G4endl;
 
 G4cout <<"(A) POSITION X : " << G4endl;
@@ -398,9 +430,6 @@ for(const auto& pos_z_B :pos_layer_B_z){
 }
 
 G4cout << "\n" << G4endl;
-
-
-
 
 
    

@@ -233,7 +233,7 @@ std::vector<G4double> fEdepB;
 std::vector<G4double> fTotaldEdx_A;
 std::vector<G4double> fTotaldEdx_B;
 
-std::vector<G4double> fGenerated_photons_A;     //I chaged for double
+std::vector<G4double> fGenerated_photons_A;
 std::vector<G4double> fGenerated_photons_B;
 
 std::vector<G4int> traversed_Bars_A; 
@@ -252,13 +252,14 @@ vector<G4String> particles_names_B;
 
 G4double TOTAL_Edep;
 G4double TOTAL_dEdx;
-G4double TOTAL_Detected_photons;
+G4int TOTAL_Detected_photons;
 G4double TOTAL_Generated_photons;
 
 G4int muonCount;
 
-//G4bool Hit_particle_passed_two_layers = false;
-
+//*
+G4bool Hit = false;
+//*
 G4int Sumcopies;
 
 G4int Trig_1;
