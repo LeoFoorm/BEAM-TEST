@@ -43,6 +43,8 @@ muonCount = 0;
     pos_layer_B_z.clear();
 
     particles_names_A.clear();
+    particles_names_B.clear();
+    
 }
 
 
@@ -96,6 +98,7 @@ void EventAction::BeginOfEventAction(const G4Event*)
     pos_layer_B_z.clear();
 
     particles_names_A.clear();
+    particles_names_B.clear();
 }
 
 

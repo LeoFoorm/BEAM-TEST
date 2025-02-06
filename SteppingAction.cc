@@ -60,7 +60,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
             fEventAction->Trigger_1_pierced(copyTrigger1);
 
             G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
-            G4cout << "PARTICLE NAME ON TG1:    " << p_name << G4endl;
+            //G4cout << "PARTICLE NAME ON TG1:    " << p_name << G4endl;
           }  
 
             
@@ -70,7 +70,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
             fEventAction->Trigger_2_pierced(copyTrigger2);
 
             G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
-            G4cout << "PARTICLE NAME ON TG2:    " << p_name << G4endl;
+            //G4cout << "PARTICLE NAME ON TG2:    " << p_name << G4endl;
           }   
         
            
@@ -80,7 +80,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
             fEventAction->Trigger_3_pierced(copyTrigger3);
 
             G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
-            G4cout << "PARTICLE NAME ON TG3:    " << p_name << G4endl;
+            //G4cout << "PARTICLE NAME ON TG3:    " << p_name << G4endl;
           } 
 
           
@@ -90,7 +90,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
             fEventAction->Trigger_4_pierced(copyTrigger4);
             
             G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
-            G4cout << "PARTICLE NAME ON TG4:    " << p_name << G4endl;
+           // G4cout << "PARTICLE NAME ON TG4:    " << p_name << G4endl;
           }  
 
                
