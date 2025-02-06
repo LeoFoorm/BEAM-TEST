@@ -271,7 +271,7 @@ G4int photons_detected_real_B = 0.0;
     G4cout << "\n" << G4endl;
     G4cout <<"TOTAL DETECTED PHOTONS: "<< TOTAL_Detected_photons << " photons \n"<< G4endl;       
             
-    man->FillNtupleIColumn(1, 35, TOTAL_Detected_photons);
+    man->FillNtupleIColumn(1, 36, TOTAL_Detected_photons);
   
 
 //------------------------------------------------------------------------------------------
@@ -300,7 +300,7 @@ for (size_t i = 0; i < 5; ++i) {
 
     G4cout << "TOTAL GENERATED PHOTONS:  " << TOTAL_Generated_photons <<" photons "<< G4endl;
 
-      man->FillNtupleDColumn(1, 36, TOTAL_Generated_photons);
+      man->FillNtupleDColumn(1, 35, TOTAL_Generated_photons);
 
 G4cout << "\n------------------------------------------------------------" << G4endl;
 
