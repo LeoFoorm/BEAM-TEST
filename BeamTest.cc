@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include "G4RunManager.hh"
+#include "G4MTRunManager.hh"
+
 #include "G4UImanager.hh"
 #include "G4UIExecutive.hh"
 #include "G4VisManager.hh"
@@ -18,10 +20,6 @@
 #include "Randomize.hh"
 
 
-//argc and argv are parameters used to process command-line arguments. argc argument count and
-// argv argument vector.
-
-
 
 int main(int argc,char** argv)
 {
@@ -30,12 +28,18 @@ int main(int argc,char** argv)
     seeds[1] = 0;
     CLHEP::HepRandom::setTheSeeds(seeds);
     
-    G4RunManager *runManager = new G4RunManager;
+    //#ifdef G4MULTITHREADED
+      //  G4MTRunManager *runManager = new G4MTRunManager();
+    //#else
+    
+        G4RunManager *runManager = new G4RunManager();
+    //#endif
     
     runManager->SetUserInitialization(new DetectorConstruction());
     runManager->SetUserInitialization(new PhysicsList());
     runManager->SetUserInitialization(new ActionInitialization());
-    runManager->Initialize();
+    
+    //runManager->Initialize(); NOW IN THE MACRO FILE
     
     G4UIExecutive *ui = 0;
     if(argc==1)

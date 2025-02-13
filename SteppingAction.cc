@@ -59,7 +59,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
             G4int copyTrigger1 = touchedbar->GetCopyNumber(); 
             fEventAction->Trigger_1_pierced(copyTrigger1);
 
-            G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
+            //G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
             //G4cout << "PARTICLE NAME ON TG1:    " << p_name << G4endl;
           }  
 
@@ -69,7 +69,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
             G4int copyTrigger2 = touchedbar->GetCopyNumber(); 
             fEventAction->Trigger_2_pierced(copyTrigger2);
 
-            G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
+            //G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
             //G4cout << "PARTICLE NAME ON TG2:    " << p_name << G4endl;
           }   
         
@@ -79,7 +79,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
             G4int copyTrigger3 = touchedbar->GetCopyNumber(); 
             fEventAction->Trigger_3_pierced(copyTrigger3);
 
-            G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
+            //G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
             //G4cout << "PARTICLE NAME ON TG3:    " << p_name << G4endl;
           } 
 
@@ -89,23 +89,11 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
             G4int copyTrigger4 = touchedbar->GetCopyNumber(); 
             fEventAction->Trigger_4_pierced(copyTrigger4);
             
-            G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
+            //G4String p_name = step->GetTrack()->GetDefinition()->GetParticleName();
            // G4cout << "PARTICLE NAME ON TG4:    " << p_name << G4endl;
           }  
 
-               
-         /* ---------------------------------------------------------------------------------
-         G4String particlename = step->GetTrack()->GetDefinition()->GetParticleName();
-           
-         G4ThreeVector POS =  step->GetPostStepPoint()->GetPosition();
-         G4double POS_X = POS.x() /cm;
-         G4double POS_Y = POS.y() /cm;
-         G4double POS_Z = POS.z() /cm;
-
-          Mapas para almacenar partículas y posiciones por capa
-         static map<string, vector<G4ThreeVector>> particlesLayerA;
-         static map<string, vector<G4ThreeVector>> particlesLayerB;
-         */
+         
          // ---------------------------------------------------------------------------------
          if (std::find(scoringVolumesA.begin(), scoringVolumesA.end(), barvolume) != scoringVolumesA.end())
         {
@@ -128,10 +116,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
 
         fEventAction->Particle_Name_Pierced_Layer_A(p_name);
 
-      
-   //particlesLayerA[particlename].emplace_back(POS_X, POS_Y, POS_Z);
-  
-  
+   
    //---------------------------------------
       G4cout << "PARTICLE ON LAYER A |  "<<p_name << " | position: (" << position_A.x() /cm <<  ", " <<  position_A.y() / cm << ", "
                << position_A.z() / cm << ") cm "<< G4endl; 
@@ -159,12 +144,7 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
             fEventAction->AccumulatedEdx_A(a, dEdxStep_A);     
          }
         }
-        /*
-         else if (std::find(scoringVolumesB.begin(), scoringVolumesB.end(), barvolume) != scoringVolumesB.end())
-    {
-        particlesLayerB[particlename].emplace_back(POS_X, POS_Y, POS_Z); 
-    }
-    */
+        
 
          if (std::find(scoringVolumesB.begin(), scoringVolumesB.end(), barvolume) != scoringVolumesB.end())
         {

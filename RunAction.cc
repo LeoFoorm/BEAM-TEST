@@ -7,7 +7,7 @@ RunAction::RunAction()
  G4AnalysisManager *man = G4AnalysisManager::Instance();
 
 
- man->CreateNtuple("Event","events numbers");
+ man->CreateNtuple("Event","events number");
  man->CreateNtupleIColumn("fEvent");
  man->FinishNtuple(0);
 
@@ -41,15 +41,15 @@ RunAction::RunAction()
   man->CreateNtupleDColumn("Particle_Momentum_MeV"); //20
   man->CreateNtupleDColumn("Particle_Momentum_GeV"); //21
   man->CreateNtupleDColumn("angle"); //22
-  man->CreateNtupleDColumn("Copy_num_Bar_Traversed_A"); //23
-  man->CreateNtupleDColumn("Copy_num_Bar_Traversed_B"); //24
+  man->CreateNtupleIColumn("Copy_num_Bar_Traversed_A"); //23
+  man->CreateNtupleIColumn("Copy_num_Bar_Traversed_B"); //24
   man->CreateNtupleIColumn("All_Triggers_Got_Activated");//25
   
   man->CreateNtupleDColumn("Position_x_Detected_On_Layer_A"); //26
-  man->CreateNtupleDColumn("Position_y_Detected_On_Layer_A_(?)"); //27
+  man->CreateNtupleDColumn("Position_y_Detected_On_Layer_A"); //27
   man->CreateNtupleDColumn("Position_z_Detected_On_Layer_A"); //28
   man->CreateNtupleDColumn("Position_x_Detected_On_Layer_B"); //29
-  man->CreateNtupleDColumn("Position_y_Detected_On_Layer_B_(?)"); //30
+  man->CreateNtupleDColumn("Position_y_Detected_On_Layer_B"); //30
   man->CreateNtupleDColumn("Position_z_Detected_On_Layer_B"); //31
   man->CreateNtupleSColumn("PARTICLE_TYPE");//32
 
@@ -61,6 +61,16 @@ RunAction::RunAction()
   man->CreateNtupleSColumn("PARTICLE_TYPE_B");//37
 
   man->CreateNtupleIColumn("HIT"); //38
+
+  man->CreateNtupleDColumn("A_ANGLE_RAD_RESPEC_Y"); //39
+  man->CreateNtupleDColumn("A_ANGLE_DEG_RESPEC_Y"); //40
+  man->CreateNtupleDColumn("A_ANGLE_RAD_RESPEC_XZ"); //41
+  man->CreateNtupleDColumn("A_ANGLE_DEG_RESPECT_XZ"); //42
+
+  man->CreateNtupleDColumn("B_ANGLE_RAD_RESPEC_Y"); //43
+  man->CreateNtupleDColumn("B_ANGLE_DEG_RESPEC_Y"); //44
+  man->CreateNtupleDColumn("B_ANGLE_RAD_RESPEC_XZ"); //45
+  man->CreateNtupleDColumn("B_ANGLE_DEG_RESPECT_XZ"); //46
 
   
 

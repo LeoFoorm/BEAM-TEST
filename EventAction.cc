@@ -1,6 +1,7 @@
 //   EVENT ACTION SOURCE
 
 #include "EventAction.hh" 
+#include <vector>
 using namespace std;
 
 
@@ -55,6 +56,8 @@ EventAction::~EventAction()
 
 void EventAction::BeginOfEventAction(const G4Event*) 
 {
+    G4AnalysisManager *man = G4AnalysisManager::Instance(); 
+
     photonHits_event_A.assign(2, 0);
     photonHits_event_B.assign(3, 0);
     
@@ -99,6 +102,10 @@ void EventAction::BeginOfEventAction(const G4Event*)
 
     particles_names_A.clear();
     particles_names_B.clear();
+
+    G4int evt = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID(); 
+    man->FillNtupleIColumn(0,0,evt);
+     man->AddNtupleRow(0); 
 }
 
 
@@ -109,35 +116,36 @@ G4AnalysisManager *man = G4AnalysisManager::Instance();
 //------------------------------------------------------------------------------------------
 G4cout << "------------------------------------------------------------\n" << G4endl;
 G4cout << "PARTICLES DETECTED PER TRIGGER:"<<G4endl;
-G4cout << "TRIGGER 1: ";
+
+//G4cout << "TRIGGER 1: ";
     if(Trig_1 == 0){
-        G4cout << "DID NOT PASSED";
+        G4cout << "TRIGGER 1 DID NOT PASSED";
     } else { 
-        G4cout << "PASSED";
+        //G4cout << "PASSED";
     }
-G4cout << G4endl;
+//G4cout << G4endl;
 
-G4cout << "TRIGGER 2: ";
+//G4cout << "TRIGGER 2: ";
     if(Trig_2 == 0){
-        G4cout << "DID NOT PASSED";
+        G4cout << "TRIGGER 2 DID NOT PASSED";
     } else { 
-        G4cout << "PASSED";
+       // G4cout << "PASSED";
     }
-G4cout << G4endl;
+//G4cout << G4endl;
 
-G4cout << "TRIGGER 3: ";
+//G4cout << "TRIGGER 3: ";
     if(Trig_3 == 0){
-        G4cout << "DID NOT PASSED";
+        G4cout << "TRIGGER 3 DID NOT PASSED";
     } else { 
-        G4cout << "PASSED";
+        //G4cout << "PASSED";
     }
-G4cout << G4endl;
+//G4cout << G4endl;
 
-G4cout << "TRIGGER 4: ";
+//G4cout << "TRIGGER 4: ";
     if(Trig_4 == 0){
-        G4cout << "DID NOT PASSED";
+        G4cout << "TRIGGER 4 DID NOT PASSED";
     } else { 
-        G4cout << "PASSED";
+        //G4cout << "PASSED";
     }
 G4cout << "\n"<< G4endl;
 
@@ -162,12 +170,7 @@ G4cout << "\n"<< G4endl;
     G4cout << "ALL TRIGGERS DETECTED: " << ALL_TRIGGERS_INT << G4endl;
 
     G4cout << G4endl;
-    /*
-    if(){
 
-    }else{
-
-    }*/
 
     man->FillNtupleIColumn(1, 25, ALL_TRIGGERS_INT);
 
@@ -305,8 +308,22 @@ for (size_t v = 0; v < fGenerated_photons_B.size(); v++){
 
 
 G4cout << "\n" << G4endl;
+/*
+G4cout << "**********************************" <<G4endl;
+for(auto gen : fGenerated_photons_A) {
+    G4cout << gen<< " ";
+    G4cout << G4endl;
+    }
 
-for (size_t i = 0; i < 5; ++i) {
+    for(auto gen : fGenerated_photons_B) {
+    G4cout << gen<< " ";
+    G4cout << G4endl;
+    }
+G4cout << "**********************************" <<G4endl;
+G4cout << "" <<G4endl;
+*/
+
+for (size_t i = 0; i < fGenerated_photons_B.size(); ++i) {
         TOTAL_Generated_photons += fGenerated_photons_A[i] + fGenerated_photons_B[i];
     }
 
@@ -321,11 +338,11 @@ G4cout << "" << G4endl;
 G4cout << "LAYER A | ID: ";
 if (traversed_Bars_A.empty()) {
     G4cout << "-1  (-1 means no particle has passed.)";
-    man->FillNtupleDColumn(1, 23, -1);
+    man->FillNtupleIColumn(1, 23, -1);
 } else {
     for (auto bar_a : traversed_Bars_A) {
         G4cout << bar_a << " ";
-        man->FillNtupleDColumn(1,23,bar_a);
+        man->FillNtupleIColumn(1,23,bar_a);
     }
 }
  G4cout <<G4endl;
@@ -334,11 +351,11 @@ if (traversed_Bars_A.empty()) {
 G4cout << "LAYER B | ID: ";
  if(traversed_Bars_B.empty()){
         G4cout<< "non (0)";
-        man->FillNtupleDColumn(1,24,0);
+        man->FillNtupleIColumn(1,24,0);
     }else{
     for (auto bar_b : traversed_Bars_B) {
         G4cout << bar_b << " ";
-        man->FillNtupleDColumn(1,24,bar_b);
+        man->FillNtupleIColumn(1,24,bar_b);
     }
     }
 
@@ -376,7 +393,7 @@ if (particles_names_A.empty()) {
     }}
 
 
-G4cout << G4endl;
+G4cout <<"\n"<< G4endl;
 G4cout << "PARTICLES ON LAYER B: " <<  G4endl;
 
 if (particles_names_B.empty()) {
@@ -404,7 +421,7 @@ G4cout <<"(A) POSITION Y: " << G4endl;
 for(const auto& pos_y_A :pos_layer_A_y){
         G4cout << pos_y_A << " cm, ";
         man->FillNtupleDColumn(1, 27, pos_y_A);
-}
+}m
 G4cout << "" << G4endl;
 G4cout <<"(A) POSITION Z: " << G4endl;
 for(const auto& pos_z_A :pos_layer_A_z){
@@ -433,9 +450,151 @@ for(const auto& pos_z_B :pos_layer_B_z){
 }
 
 G4cout << "\n" << G4endl;
+G4cout <<"------------------------------------------------------------" << G4endl;
+//-----------------  ANGLE  -----------------
+//if the particle just pass layer A
+
+   G4ThreeVector pos_vertex  (0., 305.56, 0.);
+G4cout <<"Position of vertex: 305.56 cm on axis Y" << G4endl;
+G4cout<< "" <<G4endl;
 
 
+if (!pos_layer_A_x.empty() && !pos_layer_A_y.empty() && !pos_layer_A_z.empty()) {
+
+        G4double first_pos_x_a = pos_layer_A_x.front();
+        G4double first_pos_y_a = pos_layer_A_y.front();
+        G4double first_pos_z_a = pos_layer_A_z.front();
+     
+        G4ThreeVector pos_on_A (first_pos_x_a, first_pos_y_a, first_pos_z_a);
+        
+
+        // Print the vector for debugging
+        G4cout << "LAYER A | First position : ("
+               << pos_on_A.x() << ", " << pos_on_A.y() << ", " << pos_on_A.z() << ") cm" << G4endl;
+        
+        G4cout <<""<<G4endl;
+        
+
+        G4ThreeVector sustraction_a =  pos_on_A - pos_vertex ;
+        G4double Magnitude_sustraction_a = sustraction_a.mag();
+
+        G4cout << "LAYER A | vector with the direction: ("
+               << sustraction_a.x() << ", " << sustraction_a.y() << ", " << sustraction_a.z() << ") cm" << G4endl;
+        
+        G4cout <<""<<G4endl;
+
+
+         G4ThreeVector unit_sust_a = sustraction_a.unit();
+        G4cout << "LAYER A | UNIT direction : ("
+               << unit_sust_a.x() << ", " << unit_sust_a.y() << ", " << unit_sust_a.z() << ") cm" << G4endl;
+        
+         G4cout <<""<<G4endl;
+
+
+        G4ThreeVector unit_y(0., -1., 0.);
+        
+
+         G4double angle_a = std::acos(sustraction_a.unit().dot(unit_y));
+        //G4double angle_a = std::acos(first_pos_y_a/Magnitude_sustraction_a);
+        G4double angle_a_d = angle_a * (180.0/ CLHEP::pi);
+        G4double angle_a_xz = 90 - angle_a_d;
+        G4double angle_a_xz_rad = (CLHEP::pi/2) - angle_a;
+
+         G4cout <<""<<G4endl;
+        G4cout <<"LAYER A | Magnitude: "<<Magnitude_sustraction_a <<G4endl;
+        G4cout <<""<<G4endl;
+        G4cout <<"LAYER A | Dispersion angle (radians) respect to y:: " << angle_a << " rad"<< G4endl;
+        G4cout <<""<<G4endl;
+        G4cout <<"LAYER A | Dispersion angle (degrees) respect to y: " << angle_a_d <<" °"<< G4endl;
+        G4cout <<""<<G4endl;
+        G4cout <<"LAYER A | Dispersion angle (radians) respect to plane XZ: " << angle_a_xz_rad<<" rad"<< G4endl;
+         G4cout <<""<<G4endl;
+        G4cout <<"LAYER A | Dispersion angle (degrees) respect to plane XZ: " << angle_a_xz<<" °"<< G4endl;
+
+
+        man->FillNtupleDColumn(1,39,angle_a);
+        man->FillNtupleDColumn(1,40,angle_a_d);
+        man->FillNtupleDColumn(1,41,angle_a_xz_rad);
+        man->FillNtupleDColumn(1,42,angle_a_xz);
+    
+
+    } else {
+            G4cout << "No positions recorded in Layer A for this event." << G4endl;
    
+    }
+    G4cout << "\n" << G4endl;
+   
+//------------------------------------------------------------------------------------
+G4cout <<"------------------------------------------------------------" << G4endl;
+
+  if (!pos_layer_B_x.empty() && !pos_layer_B_y.empty() && !pos_layer_B_z.empty()) {
+
+        G4double first_pos_x_b = pos_layer_B_x.front();
+        G4double first_pos_y_b = pos_layer_B_y.front();
+        G4double first_pos_z_b = pos_layer_B_z.front();
+       
+        G4ThreeVector pos_on_B (first_pos_x_b, first_pos_y_b, first_pos_z_b);
+
+
+        // Print the vector for debugging
+        G4cout << "LAYER B | First position : ("
+               << pos_on_B.x() << ", " << pos_on_B.y() << ", " << pos_on_B.z() << ") cm" << G4endl;
+
+        G4cout <<""<<G4endl;
+        
+
+        G4ThreeVector sustraction_b =  pos_on_B - pos_vertex ;
+        G4double Magnitude_sustraction_b = sustraction_b.mag();
+
+        G4cout << "LAYER B | vector with the direction: ("
+               << sustraction_b.x() << ", " << sustraction_b.y() << ", " << sustraction_b.z() << ") cm" << G4endl;
+        
+        G4cout <<""<<G4endl;
+
+
+        G4ThreeVector unit_sust_b = sustraction_b.unit();
+        G4cout << "LAYER B | UNIT direction : ("
+               << unit_sust_b.x() << ", " << unit_sust_b.y() << ", " << unit_sust_b.z() << ") cm" << G4endl;
+        
+         G4cout <<""<<G4endl;
+
+
+        G4ThreeVector unit_y(0., -1., 0.);
+        
+
+         G4double angle_b = std::acos(sustraction_b.unit().dot(unit_y));
+        //G4double angle_a = std::acos(first_pos_y_a/Magnitude_sustraction_a);
+        G4double angle_b_d = angle_b * (180.0/ CLHEP::pi);
+        G4double angle_b_xz = 90 - angle_b_d;
+        G4double angle_b_xz_rad = (CLHEP::pi/2) - angle_b;
+
+         G4cout <<""<<G4endl;
+        G4cout <<"LAYER B | Magnitude: "<<Magnitude_sustraction_b <<G4endl;
+
+        G4cout <<""<<G4endl;
+        G4cout << "LAYER B | Dispersion angle (radians): " << angle_b <<" rad"<< G4endl;
+
+        G4cout <<""<<G4endl;
+        G4cout << "LAYER B | Dispersion angle (degrees) respect to y: " << angle_b_d <<" °"<< G4endl;
+
+        G4cout <<""<<G4endl;
+        G4cout << "LAYER B | Dispersion angle (rad) respect to plane XZ: " << angle_b_xz_rad<<" rad"<< G4endl;
+
+        G4cout <<""<<G4endl;
+        G4cout << "LAYER B | Dispersion angle (degrees) respect to plane XZ: " << angle_b_xz<<" °"<< G4endl;
+
+        man->FillNtupleDColumn(1,43,angle_b);
+        man->FillNtupleDColumn(1,44,angle_b_d);
+        man->FillNtupleDColumn(1,45,angle_b_xz_rad);
+        man->FillNtupleDColumn(1,46,angle_b_xz);
+
+    } else {
+            G4cout << "No positions recorded in Layer B for this event." << G4endl;
+   
+    }  
+
+G4cout<<"\n"<<G4endl;
+
 man->AddNtupleRow(1);
 
 

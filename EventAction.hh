@@ -7,7 +7,10 @@
 #include "G4Event.hh"
 #include "G4AnalysisManager.hh"
 #include "RunAction.hh"
-
+#include "G4SystemOfUnits.hh"
+#include "G4ThreeVector.hh"
+#include <cmath>
+#include <vector>
 using namespace std; 
 
 class EventAction : public G4UserEventAction
@@ -219,6 +222,8 @@ void Particle_Name_Pierced_Layer_B(G4String name_b){
 vector<G4String> Get_particle_names_B() const {return particles_names_B;}
 
 //---------------------------------------------------------
+// FOR GETTING THE ANGLE
+
 
 private:
 
